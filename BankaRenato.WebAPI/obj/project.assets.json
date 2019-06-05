@@ -11803,11 +11803,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\Banka_Renato\\Banka_Renato.csproj",
+      "projectUniqueName": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\Banka_Renato.csproj",
       "projectName": "Banka_Renato",
-      "projectPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\Banka_Renato\\Banka_Renato.csproj",
+      "projectPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\Banka_Renato.csproj",
       "packagesPath": "C:\\Users\\rembareeG\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\Banka_Renato\\obj\\",
+      "outputPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
