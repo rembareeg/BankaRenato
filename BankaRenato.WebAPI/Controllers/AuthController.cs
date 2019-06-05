@@ -19,30 +19,30 @@ namespace BankaRenato.WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly IAuthRepository _rep;
+        private readonly IAuthRepository _repo;
 
         public AuthController(IConfiguration config, IAuthRepository repo)
         {
             _config = config;
-            _rep = repo;
+            _repo = repo;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegistration)       
         {
             //Check if user with same username exists
-            if (await _rep.UserExists(userForRegistration.Username))
+            if (await _repo.UserExists(userForRegistration.Username))
             {
                 return BadRequest("Username already exists");
             }
             //Check if user with same email exists
-            if (await _rep.EmailExists(userForRegistration.Email))
+            if (await _repo.EmailExists(userForRegistration.Email))
             {
                 return BadRequest("Email already in use");
             }
 
             //Registrate user
-            if (await _rep.Register(userForRegistration)) return Ok();
+            if (await _repo.Register(userForRegistration)) return Ok();
 
             return Unauthorized();
 
@@ -52,7 +52,7 @@ namespace BankaRenato.WebAPI.Controllers
         public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
 
-            User user = await _rep.Login(userForLogin.Username, userForLogin.Password);
+            User user = await _repo.Login(userForLogin.Username, userForLogin.Password);
             
             if (user == null)
             {
