@@ -51,7 +51,7 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
-            
+
             User user = await _rep.Login(userForLogin.Username, userForLogin.Password);
             
             if (user == null)
@@ -84,6 +84,7 @@ namespace BankaRenato.WebAPI.Controllers
             return Ok(new {
                 token = tokenHandler.WriteToken(token)
             });
+
         }
 
     }

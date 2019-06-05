@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BankaRenato.WebAPI.Dtos;
 using BankaRenato.WebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace BankaRenato.WebAPI.Data
 {
     public class AuthRepository : IAuthRepository
     {
+        private readonly BankaRenatoDBContext _context;
 
-        private readonly IConfiguration _config;
-
-        public AuthRepository(IConfiguration config)
+        public AuthRepository(BankaRenatoDBContext context)
         {
-            _config = config;
+            _context = context;
         }
 
         /// <summary>
@@ -25,30 +26,17 @@ namespace BankaRenato.WebAPI.Data
         /// <param name="username">User username</param>
         /// <param name="password">User password</param>
         /// <returns>User object</returns>
-        public async Task<User> Login(string username, string password)
+       public async Task<User> Login(string username, string password)
         {
-            Dt database = new Dt(_config);
-            database.Cmd.CommandText = "UserLogin";
-            database.Cmd.Parameters.AddWithValue("@username", username.ToLower()).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.AddWithValue("@password", password).Direction = ParameterDirection.Input;
-            
-            database.Cmd.Parameters.Add("@response", SqlDbType.Int).Direction = ParameterDirection.Output;
-            await database.GetData();
-
-            if(database.Rows.Count == 1)
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                User user = new User();
-                user.Id = (int)database.Rows[0][0];
-                user.Username = (string)database.Rows[0][1];
-                user.Email = (string)database.Rows[0][2];
-                user.FirstName = (string)database.Rows[0][3];
-                user.LastName = (string)database.Rows[0][4];
+                new SqlParameter{ParameterName = "username",DbType = DbType.String,Direction = ParameterDirection.Input,Value = username},
+                new SqlParameter{ParameterName = "password",DbType = DbType.String,Direction = ParameterDirection.Input,Value = password}
+            };
 
-                return user;
-            }
+            User user = await _context.User.FromSql("EXECUTE RegisterUser @username, @password", parameters).FirstAsync() as User;
 
-            return null;
-            
+            return user;
         }
         /// <summary>
         /// Returns true if user is successfully registrated
@@ -57,17 +45,24 @@ namespace BankaRenato.WebAPI.Data
         /// <returns></returns>
         public async Task<bool> Register(UserForRegisterDto user)
         {
-            Dt database = new Dt(_config);
-            database.Cmd.CommandText = "RegisterUser";
-            database.Cmd.Parameters.AddWithValue("@username", user.Username.ToLower()).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.AddWithValue("@password", user.Password).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.AddWithValue("@email", user.Email.ToLower()).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.AddWithValue("@firstName", user.FirstName).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.AddWithValue("@lastName", user.LastName).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.Add("@response", SqlDbType.Bit).Direction = ParameterDirection.Output;
-            await database.GetData();
-            return (bool)(database.Cmd.Parameters["@response"].Value);
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter{ParameterName = "username", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Username},
+                new SqlParameter{ParameterName = "password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
+                new SqlParameter{ParameterName = "email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email},
+                new SqlParameter{ParameterName = "firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
+                new SqlParameter{ParameterName = "lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
 
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE RegisterUser @username, @password, @email, @firstname, @lastname, @response OUT", parameters, sqlResponse);
+
+            return (bool)sqlResponse.Value;
         }        
         /// <summary>
         /// Returns true if user with username exists
@@ -76,12 +71,23 @@ namespace BankaRenato.WebAPI.Data
         /// <returns></returns>
         public async Task<bool> UserExists(string username)
         {
-            Dt database = new Dt(_config);
-            database.Cmd.CommandText = "UserExists";
-            database.Cmd.Parameters.AddWithValue("@username", username.ToLower()).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.Add("@response", SqlDbType.Bit).Direction = ParameterDirection.Output;
-            await database.GetData();
-            return (bool)(database.Cmd.Parameters["@response"].Value);
+            SqlParameter sqlUsername = new SqlParameter
+            {
+                ParameterName = "username",
+                DbType = DbType.String,
+                Direction = ParameterDirection.Input,
+                Value = username
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UserExists @username, @response OUT", sqlUsername, sqlResponse);
+
+            return (bool)sqlResponse.Value;
         }
         /// <summary>
         /// Returns true if user with email exists
@@ -90,12 +96,23 @@ namespace BankaRenato.WebAPI.Data
         /// <returns></returns>
         public async Task<bool> EmailExists(string email)
         {
-            Dt database = new Dt(_config);
-            database.Cmd.CommandText = "EmailExists";
-            database.Cmd.Parameters.AddWithValue("@email", email.ToLower()).Direction = ParameterDirection.Input;
-            database.Cmd.Parameters.Add("@response", SqlDbType.Bit).Direction = ParameterDirection.Output;
-            await database.GetData();
-            return (bool)(database.Cmd.Parameters["@response"].Value);
+            SqlParameter sqlEmail = new SqlParameter
+            {
+                ParameterName = "email",
+                DbType = DbType.String,
+                Direction = ParameterDirection.Input,
+                Value = email
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+            
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE EmailExists @email, @response OUT", sqlEmail, sqlResponse);
+
+            return (bool)sqlResponse.Value;
         }
     }
 }
