@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Banka_Renato.Data
+namespace BankaRenato.WebAPI.Data
 {
     public class Dt : DataTable
     {

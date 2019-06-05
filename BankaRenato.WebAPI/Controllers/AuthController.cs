@@ -1,6 +1,6 @@
-﻿using Banka_Renato.Data;
-using Banka_Renato.Dtos;
-using Banka_Renato.Models;
+﻿using BankaRenato.WebAPI.Data;
+using BankaRenato.WebAPI.Dtos;
+using BankaRenato.WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Banka_Renato.Controllers
+namespace BankaRenato.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

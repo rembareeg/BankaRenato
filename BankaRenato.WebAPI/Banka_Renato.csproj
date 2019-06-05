@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>BankaRenato.WebAPI</AssemblyName>
+    <RootNamespace>BankaRenato.WebAPI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

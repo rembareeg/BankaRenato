@@ -11804,7 +11804,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\Banka_Renato.csproj",
-      "projectName": "Banka_Renato",
+      "projectName": "BankaRenato.WebAPI",
       "projectPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\Banka_Renato.csproj",
       "packagesPath": "C:\\Users\\rembareeG\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\rembareeG\\source\\repos\\Banka_Renato\\BankaRenato.WebAPI\\obj\\",

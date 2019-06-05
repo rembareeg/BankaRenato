@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Banka_Renato.Dtos;
-using Banka_Renato.Models;
+using BankaRenato.WebAPI.Dtos;
+using BankaRenato.WebAPI.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Banka_Renato.Data
+namespace BankaRenato.WebAPI.Data
 {
     public class AuthRepository : IAuthRepository
     {
