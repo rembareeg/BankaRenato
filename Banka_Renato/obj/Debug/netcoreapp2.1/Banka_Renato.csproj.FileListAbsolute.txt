@@ -3,7 +3,6 @@ C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\bin\Debug\netcoreapp2.
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\bin\Debug\netcoreapp2.1\Banka_Renato.runtimeconfig.dev.json
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\bin\Debug\netcoreapp2.1\Banka_Renato.dll
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\bin\Debug\netcoreapp2.1\Banka_Renato.pdb
-C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.csprojAssemblyReference.cache
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.csproj.CoreCompileInputs.cache
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.RazorAssemblyInfo.cache
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.RazorAssemblyInfo.cs
@@ -12,3 +11,4 @@ C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.RazorTargetAssemblyInfo.cache
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.dll
 C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.pdb
+C:\Users\rembareeG\source\repos\Banka_Renato\Banka_Renato\obj\Debug\netcoreapp2.1\Banka_Renato.csprojAssemblyReference.cache

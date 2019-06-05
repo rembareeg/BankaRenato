@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Banka_Renato.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Banka_Renato.Controllers
@@ -14,6 +16,7 @@ namespace Banka_Renato.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            //DataTable dt = StoredProcedures.Proba();
             return new string[] { "value1", "value2" };
         }
 
