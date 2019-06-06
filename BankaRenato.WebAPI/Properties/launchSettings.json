@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/auth",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "Banka_Renato": {
@@ -22,9 +22,9 @@
       "launchBrowser": true,
       "launchUrl": "api/auth",
       "applicationUrl": "http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Production"
+			}
     }
   }
 }
