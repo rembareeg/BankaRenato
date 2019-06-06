@@ -2,7 +2,11 @@
   <a class="active" href="#register">Register</a>
   
   <div class="login-container">
-      <a *ngIf="loggedIn()" (click)="logout()">Logout</a>  
+    <div *ngIf="loggedIn()">
+    <div>{{authService.decodedToken?.unique_name}}</div>
+    <a  (click)="logout()">Logout</a> 
+  </div>
+       
     <form *ngIf="!loggedIn()" #loginForm="ngForm" (ngSubmit)="login()">
       <input type="text" placeholder="Username" name="Username" required [(ngModel)]="model.Username">
       <input type="text" placeholder="Password" name="Password" type="password" required [(ngModel)]="model.Password">
