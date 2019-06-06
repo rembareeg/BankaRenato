@@ -53,7 +53,7 @@ namespace BankaRenato.WebAPI.Data
                 new SqlParameter{ParameterName = "@firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
                 new SqlParameter{ParameterName = "@lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
                 new SqlParameter{ParameterName = "@response",DbType = DbType.Boolean,Direction = ParameterDirection.Output}
-        };
+            };
 
             await _context.Database.ExecuteSqlCommandAsync("EXECUTE RegisterUser @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
 
