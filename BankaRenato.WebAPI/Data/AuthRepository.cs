@@ -30,17 +30,11 @@ namespace BankaRenato.WebAPI.Data
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter{ParameterName = "username", DbType = DbType.String,Direction = ParameterDirection.Input,Value = username.ToLower()},
-                new SqlParameter{ParameterName = "password", DbType = DbType.String,Direction = ParameterDirection.Input,Value = password}
-            };
-            SqlParameter sqlResponse = new SqlParameter
-            {
-                ParameterName = "response",
-                DbType = DbType.Int16,
-                Direction = ParameterDirection.Output
-            };
+                new SqlParameter{ParameterName = "@username", DbType = DbType.String,Direction = ParameterDirection.Input,Value = username.ToLower()},
+                new SqlParameter{ParameterName = "@password", DbType = DbType.String,Direction = ParameterDirection.Input,Value = password}
+                };
 
-            User user = await _context.User.FromSql("EXECUTE UserLogin @username, @password, @response OUT", parameters, sqlResponse).FirstAsync() as User;
+            User user = await _context.User.FromSql("EXECUTE UserLogin @username, @password", parameters).FirstOrDefaultAsync() as User;
 
             return user;
         }
@@ -53,22 +47,17 @@ namespace BankaRenato.WebAPI.Data
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter{ParameterName = "username", DbType = DbType.AnsiString, Direction = ParameterDirection.Input, Value = user.Username.ToLower()},
-                new SqlParameter{ParameterName = "password", DbType = DbType.AnsiString, Direction = ParameterDirection.Input, Value = user.Password},
-                new SqlParameter{ParameterName = "email", DbType = DbType.AnsiString, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
-                new SqlParameter{ParameterName = "firstName", DbType = DbType.AnsiString, Direction = ParameterDirection.Input, Value = user.FirstName},
-                new SqlParameter{ParameterName = "lastName ", DbType = DbType.AnsiString, Direction = ParameterDirection.Input, Value = user.LastName}
-            };
-            SqlParameter sqlResponse = new SqlParameter
-            {
-                ParameterName = "response",
-                DbType = DbType.Boolean,
-                Direction = ParameterDirection.Output
-            };
+                new SqlParameter{ParameterName = "@username", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Username.ToLower()},
+                new SqlParameter{ParameterName = "@password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
+                new SqlParameter{ParameterName = "@email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
+                new SqlParameter{ParameterName = "@firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
+                new SqlParameter{ParameterName = "@lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
+                new SqlParameter{ParameterName = "@response",DbType = DbType.Boolean,Direction = ParameterDirection.Output}
+        };
 
-            await _context.Database.ExecuteSqlCommandAsync("EXECUTE RegisterUser @username, @password, @email, @firstName, @lastName, @response OUT", parameters, sqlResponse);
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE RegisterUser @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
 
-            return (bool)sqlResponse.Value;
+            return (bool)parameters[parameters.Length - 1].Value;
         }        
         /// <summary>
         /// Returns true if user with username exists
@@ -79,14 +68,14 @@ namespace BankaRenato.WebAPI.Data
         {
             SqlParameter sqlUsername = new SqlParameter
             {
-                ParameterName = "username",
+                ParameterName = "@username",
                 DbType = DbType.String,
                 Direction = ParameterDirection.Input,
                 Value = username.ToLower()
             };
             SqlParameter sqlResponse = new SqlParameter
             {
-                ParameterName = "response",
+                ParameterName = "@response",
                 DbType = DbType.Boolean,
                 Direction = ParameterDirection.Output
             };
@@ -104,14 +93,14 @@ namespace BankaRenato.WebAPI.Data
         {
             SqlParameter sqlEmail = new SqlParameter
             {
-                ParameterName = "email",
+                ParameterName = "@email",
                 DbType = DbType.String,
                 Direction = ParameterDirection.Input,
                 Value = email.ToLower()
             };
             SqlParameter sqlResponse = new SqlParameter
             {
-                ParameterName = "response",
+                ParameterName = "@response",
                 DbType = DbType.Boolean,
                 Direction = ParameterDirection.Output
             };

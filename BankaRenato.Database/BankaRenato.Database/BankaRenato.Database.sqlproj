@@ -67,4 +67,7 @@
     <Build Include="StoredProcedures\UserExists.sql" />
     <Build Include="StoredProcedures\UserLogin.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="BankaRenato.Database.publish.xml" />
+  </ItemGroup>
 </Project>
