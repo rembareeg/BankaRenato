@@ -1,5 +1,6 @@
 <div class="topnav">
-  <a class="active" href="#register">Register</a>
+  <a [routerLink]="[ '/home' ]" routerLinkActive="active">Home</a>
+  <a *ngIf="!loggedIn()" [routerLink]="[ '/register' ]"  routerLinkActive="active">Register</a>
   
   <div class="login-container">
     <div *ngIf="loggedIn()">

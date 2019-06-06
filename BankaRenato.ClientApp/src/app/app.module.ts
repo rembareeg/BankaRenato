@@ -10,12 +10,16 @@ import { AuthService } from './_services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
+import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
-      RegisterComponent
+      RegisterComponent,
+      HomeComponent,
+      DashboardComponent
    ],
    imports: [
       BrowserModule,
