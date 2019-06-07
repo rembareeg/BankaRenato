@@ -7,6 +7,7 @@
 	Email NVARCHAR(40) NOT NULL,
     FirstName NVARCHAR(40) NOT NULL,
     LastName NVARCHAR(40) NOT NULL,
+    [Permission] INT NOT NULL, 
     CONSTRAINT [PK_User_UserID] PRIMARY KEY CLUSTERED (Id ASC)
 
 )
