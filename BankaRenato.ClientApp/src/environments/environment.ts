@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  baseUrl : 'http://localhost:56188/api/auth/'
+  baseUrl : 'http://localhost:56188/api/',
+  whiteList: ['localhost:56188'],
+  blackList: ['localhost:56188/api/auth']
 };
 
 /*

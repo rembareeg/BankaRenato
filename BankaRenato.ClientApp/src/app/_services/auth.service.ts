@@ -15,7 +15,7 @@ decodedToken: any;
 constructor(private http: HttpClient) {}
 
 login(model: any){
-  return this.http.post(environment.baseUrl + 'login', model).pipe(
+  return this.http.post(environment.baseUrl + 'auth/login', model).pipe(
     map((response: any) => {
       const user = response;
       if(user){
@@ -26,7 +26,7 @@ login(model: any){
 }
 
 register(model: any){
-  return this.http.post(environment.baseUrl + 'register', model);
+  return this.http.post(environment.baseUrl + 'auth/register', model);
 }
 
 loggedIn(){

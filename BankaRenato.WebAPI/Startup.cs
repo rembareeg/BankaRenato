@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BankaRenato.WebAPI.Data;
 using BankaRenato.WebAPI.Helpers;
 using BankaRenato.WebAPI.Models;
@@ -34,14 +35,20 @@ namespace BankaRenato.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             //Allow cross origin
             services.AddCors();
+            //Inject AutoMapper
+            services.AddAutoMapper(typeof(Startup));
             //Injecting sql connection string
             services.AddDbContext<BankaRenatoDBContext>(options =>
                 options.UseSqlServer(Configuration.GetSection("ConnectionStrings:DefaultConnection").Value));
             //Adding repository
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
             //Adding authentication (Jwt Bearer)
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

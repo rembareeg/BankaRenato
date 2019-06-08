@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[CardType]
+(
+	[Id] INT IDENTITY(0,1) NOT NULL PRIMARY KEY, 
+    [Type] VARCHAR(20) NULL
+)

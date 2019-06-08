@@ -31,4 +31,8 @@ constructor() { }
   message(message: string){
     alertify.message(message);
   }
+
+  authorize(title: string, message: string, okCallback: () => any){
+    alertify.confirm(title, message, okCallback, function(){ alertify.error('Cancel')});
+  }
 }

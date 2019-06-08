@@ -1,0 +1,14 @@
+.profile a {
+    float: left;
+    display: block;
+    color: black;
+    background-color: green;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .profile a:hover {
+    cursor: pointer; 
+  }
