@@ -70,6 +70,8 @@
     <Build Include="Tables\Account.sql" />
     <Build Include="Tables\Card.sql" />
     <Build Include="Tables\CardType.sql" />
+    <Build Include="StoredProcedures\OpenAccount.sql" />
+    <Build Include="StoredProcedures\GetUserAccounts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BankaRenato.Database.publish.xml" />

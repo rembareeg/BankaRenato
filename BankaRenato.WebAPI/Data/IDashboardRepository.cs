@@ -9,5 +9,7 @@ namespace BankaRenato.WebAPI.Data
     public interface IDashboardRepository
     {
         Task<User> GetUser(int id);
+        Task<bool> OpenAccount(int id);
+        Task<IEnumerable<Account>> GetUserAccounts(int id);
     }
 }

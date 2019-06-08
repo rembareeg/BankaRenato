@@ -20,10 +20,12 @@ export class DashboardComponent implements OnInit {
 
   openAccount(){
     this.alertify.authorize("Account open", "Are you sure you want to open new account", () => {
-      this.dashboardService.openAccount().subscribe(next => {
-        this.alertify.success("You have opened a new account");
+      this.dashboardService.openAccount(this.user).subscribe(next => {
+        this.alertify.success("Successfully created new account");
       },error => {
         this.alertify.error(error);
+      }, () =>{
+        this.loadUser();
       })
     });  
   }  
@@ -31,6 +33,7 @@ export class DashboardComponent implements OnInit {
   loadUser() {
     this.dashboardService.getUser().subscribe((user: User) => {
       this.user = user;
+      console.log(user.accounts);
     }, error => {
       this.alertify.error(error);
     });

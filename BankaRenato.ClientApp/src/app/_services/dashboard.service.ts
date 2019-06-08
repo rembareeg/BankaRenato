@@ -10,13 +10,15 @@ import { AuthService } from './auth.service';
 })
 export class DashboardService {
 
+
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   getUser(): Observable<User>{
+    console.log(environment.baseUrl + 'dashboard/getuser/' + this.authService.decodedToken.nameid);
     return this.http.get<User>(environment.baseUrl + 'dashboard/getuser/' + this.authService.decodedToken.nameid);
   }
   
-  openAccount(){
-    return this.http.post(environment.baseUrl + 'dashboard/openaccount', this.authService.decodedToken.nameid);
+  openAccount(user: User){    
+    return this.http.post(environment.baseUrl + 'dashboard/openaccount', user);   
   }
 }

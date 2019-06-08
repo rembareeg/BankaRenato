@@ -29,20 +29,20 @@ namespace BankaRenato.WebAPI.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             User user = await _repo.GetUser(id);
+            IEnumerable<Account> accounts = await _repo.GetUserAccounts(id);
 
             UserForDashboardDto dashboardUser = _mapper.Map<UserForDashboardDto>(user);
+            dashboardUser.Accounts = _mapper.Map<IEnumerable<AccountForDashboardDto>>(accounts).ToList();           
 
             return Ok(dashboardUser);
         }
 
         [HttpPost("openaccount")]
-        public async Task<IActionResult> OpenAccount(int id)
+        public async Task<IActionResult> OpenAccount(UserForDashboardDto user)
         {
-            User user = await _repo.GetUser(id);
+            if (await _repo.OpenAccount(user.Id)) return Ok();
 
-            UserForDashboardDto dashboardUser = _mapper.Map<UserForDashboardDto>(user);
-
-            return Ok(dashboardUser);
+            return Unauthorized();
         }
 
 
