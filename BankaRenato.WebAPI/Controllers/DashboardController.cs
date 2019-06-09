@@ -71,8 +71,5 @@ namespace BankaRenato.WebAPI.Controllers
             return Unauthorized();
         }
 
-
-
-
     }
 }

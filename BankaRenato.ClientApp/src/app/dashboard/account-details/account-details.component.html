@@ -9,9 +9,16 @@ Account details:
   <ng-container *ngIf="userAccount.cards.length > 0; else elseTemplate">
     <div *ngFor="let card of userAccount.cards">
 
-      <p>Card number: {{card.id}}</p>
-      <p>Card type: {{card.type}}</p>
+      
+    <div class="box">
+      <div class="left">
+        <p>Card number: {{card.id}}</p>
+        <p>Card type: {{card.type}}</p>
+        </div>
+      
     </div>
+  </div>
+
   </ng-container>
   <ng-template #elseTemplate>
     <p>You dont have any cards for this accout, feel free to create</p>
