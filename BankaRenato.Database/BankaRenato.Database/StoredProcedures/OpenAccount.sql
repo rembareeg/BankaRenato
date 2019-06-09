@@ -1,13 +1,13 @@
 ﻿-- Description:	<procetude to open account for user>
 CREATE PROCEDURE [dbo].[OpenAccount] 
-	@usedId INT,
+	@userId INT,
 	@response BIT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON
 
     BEGIN TRY
-		INSERT INTO dbo.[Account] (UserId, Currency, Balance) VALUES(@usedId, 191, 0)
+		INSERT INTO dbo.[Account] (UserId, Currency, Balance) VALUES(@userId, 191, 0)
 		SET @response = 1
 
     END TRY

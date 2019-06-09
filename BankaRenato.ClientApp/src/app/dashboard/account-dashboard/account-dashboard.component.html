@@ -1,8 +1,14 @@
-<div>
-  <p>
-  Account number: {{account.id}}
-  </p>
-  <p>
-    Account balance: {{account.balance}} {{account.currency}}
-  </p>
+<div class="wrapper">
+    <div>
+    Account number: {{account.id}}
+    </div>
+    <div>
+      Account balance: {{account.balance}} {{account.currency}}
+    </div>
+  <div class="but" [routerLink]="[ '/dashboard/', account.id ]">
+      <a>Details</a>
+  </div>
+  <div class="but" [routerLink]="[ '/dashboard/', account.id ]">
+      <a>Delete</a>
+  </div>
 </div>

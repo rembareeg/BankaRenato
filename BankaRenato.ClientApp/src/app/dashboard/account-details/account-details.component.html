@@ -1,0 +1,31 @@
+Account details:
+<p>
+ Account number: {{userAccount?.id}}
+</p>
+<p>
+ Account balance: {{userAccount?.balance}} {{userAccount?.currency}}
+</p>
+<div>
+  <ng-container *ngIf="userAccount.cards.length > 0; else elseTemplate">
+    <div *ngFor="let card of userAccount.cards">
+
+      <p>Card number: {{card.id}}</p>
+      <p>Card type: {{card.type}}</p>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <p>You dont have any cards for this accout, feel free to create</p>
+  </ng-template>
+  <div>
+    <form #registerForm="ngForm" (ngSubmit)="createCard()">
+        <div class="container">
+          <h1>Create card</h1>
+          Type: <select id="cardType" [(ngModel)]="model.CardType" name="cardtype">
+             <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
+          </select>
+          <button type="submit" class="registerbtn">Create</button>
+        </div>
+    </form>
+  </div>
+  
+</div>

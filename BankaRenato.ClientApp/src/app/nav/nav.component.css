@@ -60,6 +60,10 @@
   background: #ccc;
 }
 
+bt:hover{
+    cursor: pointer;   
+}
+
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
 @media screen and (max-width: 600px) {
   .topnav .login-container {

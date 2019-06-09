@@ -4,8 +4,8 @@
   
   <div class="login-container">
     <div *ngIf="loggedIn()">
-    <a  (click)="logout()">Logout</a> 
-  </div>
+    <a class="bt" (click)="logout()">Logout</a> 
+    </div>
        
     <form *ngIf="!loggedIn()" #loginForm="ngForm" (ngSubmit)="login()">
       <input type="text" placeholder="Username" name="Username" required [(ngModel)]="model.Username">

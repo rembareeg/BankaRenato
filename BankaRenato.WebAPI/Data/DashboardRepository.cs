@@ -39,7 +39,7 @@ namespace BankaRenato.WebAPI.Data
         {
             SqlParameter sqlUserId = new SqlParameter
             {
-                ParameterName = "@userdId",
+                ParameterName = "@userId",
                 DbType = DbType.String,
                 Direction = ParameterDirection.Input,
                 Value = id
@@ -51,9 +51,51 @@ namespace BankaRenato.WebAPI.Data
                 Direction = ParameterDirection.Output
             };
 
-            await _context.Database.ExecuteSqlCommandAsync("EXECUTE OpenAccount @userdId, @response OUT", sqlUserId, sqlResponse);
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE OpenAccount @userId, @response OUT", sqlUserId, sqlResponse);
 
             return (bool)sqlResponse.Value;
+        }
+        public async Task<Account> GetUserAccount(int id)
+        {
+            return await _context.Account.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CreateCard(int accountId, int cardType)
+        {
+            SqlParameter sqlAccount = new SqlParameter
+            {
+                ParameterName = "@accountId",
+                DbType = DbType.String,
+                Direction = ParameterDirection.Input,
+                Value = accountId
+            };
+            SqlParameter sqlCard = new SqlParameter
+            {
+                ParameterName = "@cardId",
+                DbType = DbType.String,
+                Direction = ParameterDirection.Input,
+                Value = cardType
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE CreateCard @accountId, @cardId, @response OUT", sqlAccount, sqlCard, sqlResponse);
+
+            return (bool)sqlResponse.Value;
+        }
+
+        public async Task<IEnumerable<CardType>> GetCardTypes()
+        {
+            return await _context.CardType.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Card>> GetAccountCards(int id)
+        {
+            return await _context.Card.Where(cards => cards.AccountId == id).ToListAsync();
         }
     }
 }

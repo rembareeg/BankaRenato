@@ -1,0 +1,12 @@
+.wrapper {
+    background-color: antiquewhite;
+    margin-bottom: 20px;
+}
+
+.but {
+    float: right;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: cadetblue;
+    cursor: pointer;
+}

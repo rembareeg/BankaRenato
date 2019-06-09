@@ -17,6 +17,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { DashboardService } from './_services/dashboard.service';
 import { environment } from 'src/environments/environment';
 import { AccountDashboardComponent } from './dashboard/account-dashboard/account-dashboard.component';
+import { AccountDetailsComponent } from './dashboard/account-details/account-details.component';
 
 
 export function tokenGetter() {
@@ -30,7 +31,8 @@ export function tokenGetter() {
       RegisterComponent,
       HomeComponent,
       DashboardComponent,
-      AccountDashboardComponent
+      AccountDashboardComponent,
+      AccountDetailsComponent
    ],
    imports: [
       BrowserModule,
@@ -50,7 +52,7 @@ export function tokenGetter() {
       ErrorInterceptorProvider,
       AlertifyService,
       AuthGuard,
-      DashboardService,
+      DashboardService
    ],
    bootstrap: [
       AppComponent

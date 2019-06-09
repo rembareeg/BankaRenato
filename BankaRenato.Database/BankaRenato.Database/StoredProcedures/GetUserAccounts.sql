@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[GetUserAccounts]
-	@usedId INT
+	@userId INT
 	
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT Id, UserId, Currency, Balance FROM Account WHERE UserId = @usedId
+	SELECT Id, UserId, Currency, Balance FROM Account WHERE UserId = @userId
 
 END
