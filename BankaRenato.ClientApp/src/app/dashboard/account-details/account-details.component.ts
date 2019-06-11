@@ -4,6 +4,8 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserAccount } from 'src/app/_models/userAccount';
 import { Card } from 'src/app/_models/card';
+import { AuthService } from 'src/app/_services/auth.service';
+import { Location} from '@angular/common'
 
 @Component({
   selector: 'app-account-details',
@@ -13,16 +15,19 @@ import { Card } from 'src/app/_models/card';
 export class AccountDetailsComponent implements OnInit {
   userAccount: UserAccount;
   model: any = {};
+  updateModel: any = {};
   cardTypes: Card [];
+  role: string;
+  toggleEdit: number = -1;
 
-  constructor(private dashboardService: DashboardService, private alertify: AlertifyService,
-     private route: ActivatedRoute) { }
+  constructor(private dashboardService: DashboardService, private alertify: AlertifyService, 
+    private authService: AuthService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
     this.model.CardType = 0;
+    this.role = this.authService.role();
     this.displayAccount();
     this.getCardTypes();
-    console.log(this.cardTypes);
   }
 
   displayAccount(){
@@ -37,8 +42,7 @@ export class AccountDetailsComponent implements OnInit {
   getCardTypes(){
     this.dashboardService.getCardTypes().subscribe((cards: Card []) => {
       this.cardTypes = cards;
-      console.log(cards);
-    }, error => {
+      }, error => {
       this.alertify.error(error);
     });
   }
@@ -53,6 +57,39 @@ export class AccountDetailsComponent implements OnInit {
     }, () => {
       this.displayAccount();
     });
+  }
+
+  deleteCard(id: number){
+    this.dashboardService.deleteCard(id).subscribe(
+      () => {
+       this.alertify.success("Card with id: " + id + " successfully deleted");
+       this.displayAccount();
+      },error =>{
+        this.alertify.error(error) 
+      }
+    );
+  }
+  editCard(id: number, cardType: number){
+    this.toggleEdit = id;
+    this.updateModel.CardType = cardType;
+    this.displayAccount();
+  }
+
+  updateCard(){
+    this.updateModel.Id = this.toggleEdit;
+    this.dashboardService.updateCard(this.updateModel).subscribe(next => {
+      this.alertify.success('Success');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+      
+      this.displayAccount();
+      this.toggleEdit = -1;
+    });
+  }
+
+  back(){
+    this.location.back();
   }
 
 }

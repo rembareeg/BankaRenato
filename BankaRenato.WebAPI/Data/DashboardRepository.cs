@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using BankaRenato.WebAPI.Dtos;
 using BankaRenato.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -149,6 +150,94 @@ namespace BankaRenato.WebAPI.Data
             await _context.Database.ExecuteSqlCommandAsync("EXECUTE DeleteUser @userId, @response OUT", sqlUserId, sqlResponse);
 
             return (bool)sqlResponse.Value;
+        }
+
+        public async Task<bool> DeleteAccount(int id)
+        {
+            SqlParameter sqlAccountId = new SqlParameter
+            {
+                ParameterName = "@accountId",
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                Value = id
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE DeleteAccount @accountId, @response OUT", sqlAccountId, sqlResponse);
+
+            return (bool)sqlResponse.Value;
+        }
+
+        public async Task<bool> DeleteCard(int id)
+        {
+            SqlParameter sqlCardId = new SqlParameter
+            {
+                ParameterName = "@cardId",
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                Value = id
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE DeleteCard @cardId, @response OUT", sqlCardId, sqlResponse);
+
+            return (bool)sqlResponse.Value;
+        }
+
+        public async Task<bool> UpdateCard(int id, int cardType)
+        {
+            SqlParameter sqlCardId = new SqlParameter
+            {
+                ParameterName = "@cardId",
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                Value = id
+            };
+            SqlParameter sqlCardType = new SqlParameter
+            {
+                ParameterName = "@cardType",
+                DbType = DbType.Int16,
+                Direction = ParameterDirection.Input,
+                Value = cardType
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateCard @cardId, @cardType, @response OUT", sqlCardId, sqlCardType, sqlResponse);
+
+            return (bool)sqlResponse.Value;
+        }
+
+        public async Task<bool> UpdateUser(UserForUpdateDto user)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter{ParameterName = "@userId", DbType = DbType.Int32, Direction = ParameterDirection.Input, Value = user.Id},
+                new SqlParameter{ParameterName = "@username", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Username.ToLower()},
+                new SqlParameter{ParameterName = "@password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
+                new SqlParameter{ParameterName = "@email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
+                new SqlParameter{ParameterName = "@firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
+                new SqlParameter{ParameterName = "@lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
+                new SqlParameter{ParameterName = "@response", DbType = DbType.Boolean,Direction = ParameterDirection.Output}
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateUser @userId, @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
+
+            return (bool)parameters[parameters.Length - 1].Value;
         }
     }
 }

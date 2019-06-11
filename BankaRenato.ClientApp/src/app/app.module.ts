@@ -16,11 +16,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { DashboardService } from './_services/dashboard.service';
 import { environment } from 'src/environments/environment';
-import { AccountDashboardComponent } from './dashboard/account-dashboard/account-dashboard.component';
 import { AccountDetailsComponent } from './dashboard/account-details/account-details.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { DashboardResolver } from './_resolvers/dashboard.resolver';
+import { UserEditComponent } from './dashboard/user-edit/user-edit.component';
 
 
 export function tokenGetter() {
@@ -34,9 +34,10 @@ export function tokenGetter() {
       RegisterComponent,
       HomeComponent,
       DashboardComponent,
+      UserEditComponent,
       AdminDashboardComponent,
-      AccountDashboardComponent,
       AccountDetailsComponent
+      
       
    ],
    imports: [

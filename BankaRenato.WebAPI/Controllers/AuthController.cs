@@ -31,12 +31,12 @@ namespace BankaRenato.WebAPI.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto userForRegistration)       
         {
             //Check if user with same username exists
-            if (await _repo.UserExists(userForRegistration.Username))
+            if (await _repo.UserExists(userForRegistration.Username.ToLower()))
             {
                 return BadRequest("Username already exists");
             }
             //Check if user with same email exists
-            if (await _repo.EmailExists(userForRegistration.Email))
+            if (await _repo.EmailExists(userForRegistration.Email.ToLower()))
             {
                 return BadRequest("Email already in use");
             }

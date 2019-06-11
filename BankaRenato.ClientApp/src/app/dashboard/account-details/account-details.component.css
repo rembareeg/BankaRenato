@@ -13,3 +13,18 @@
     float: left;
     background: inherit;
 }
+.right{
+    float: right;
+    background: inherit;
+}
+.but {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: cadetblue;
+    cursor: pointer;
+}
+
+.but:hover {
+    background-color: yellow;
+    cursor: pointer;
+}

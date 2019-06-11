@@ -1,4 +1,4 @@
-.profile a {
+.bb {
     float: left;
     display: block;
     color: black;
@@ -7,8 +7,40 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-  }
+}
 
-  .profile a:hover {
+.bb:hover {
     cursor: pointer; 
-  }
+}
+.box{
+  width: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background-color: coral;
+  margin-bottom: 5px;
+}
+.pad{
+    margin-left: 20px;
+    min-width: 300px;
+}
+.left{
+    float: left;
+    background: inherit;
+}
+.right{
+    float: right;
+    background: inherit;
+}
+.but {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: cadetblue;
+    cursor: pointer;
+}
+
+.but:hover {
+    background-color: yellow;
+    cursor: pointer;
+}

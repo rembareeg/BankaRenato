@@ -91,6 +91,44 @@ namespace BankaRenato.WebAPI.Controllers
 
             return Unauthorized();
         }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("deleteaccount/{id}")]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            if (await _repo.DeleteAccount(id)) return Ok();
+
+            return Unauthorized();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("deletecard/{id}")]
+        public async Task<IActionResult> DeleteCard(int id)
+        {
+            if (await _repo.DeleteCard(id)) return Ok();
+
+            return Unauthorized();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("updatecard")]
+        public async Task<IActionResult> UpdateCard(CardForDashboardDto card)
+        {
+            if (await _repo.UpdateCard(card.Id, card.CardType)) return Ok();
+
+            return Unauthorized();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("updateuser")]
+        public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
+        {
+
+            if (await _repo.UpdateUser(userForUpdate))
+            {
+                userForUpdate.Password = "";
+                return Ok(userForUpdate);
+            }                
+
+            return Unauthorized();
+        }
 
 
 

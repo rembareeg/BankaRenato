@@ -1,0 +1,25 @@
+<form #registerForm="ngForm" (ngSubmit)="change()">
+    <div class="container">
+      <h1>Change user information</h1>
+      <hr>
+  
+      <label for="username"><b>Username</b></label>
+      <input type="text" placeholder="Enter username" name="username" required [(ngModel)]="model.Username">
+
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter" name="email" required [(ngModel)]="model.Email">
+  
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Password" name="password" required [(ngModel)]="model.Password">
+  
+      <label for="firstname"><b>First name</b></label>
+      <input type="text" placeholder="First name" name="firstname" required [(ngModel)]="model.FirstName">
+
+      <label for="lastname"><b>Last name</b></label>
+      <input type="text" placeholder="Last name" name="lastname" required [(ngModel)]="model.LastName">
+      <hr>
+  
+      <button type="submit" class="registerbtn">Change information</button>
+    </div>
+  
+</form>

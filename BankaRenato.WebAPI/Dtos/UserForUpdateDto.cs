@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BankaRenato.WebAPI.Dtos
 {
-    public class UserForRegisterDto
+    public class UserForUpdateDto
     {
+        [Required]
+        public int Id { get; set; }
         [Required]
         [StringLength(maximumLength: 20, MinimumLength = 2, ErrorMessage = "Username needs to be between 4 and 20 characters")]
         public string Username { get; set; }
@@ -20,8 +22,6 @@ namespace BankaRenato.WebAPI.Dtos
         [Required]
         [StringLength(maximumLength: 40, MinimumLength = 2, ErrorMessage = "Last name needs to be between 2 and 40 characters")]
         public string LastName { get; set; }
-        [Required]
-        [StringLength(maximumLength: 15, MinimumLength = 5, ErrorMessage = "Password needs to be between 5 and 15 characters")]
         public string Password { get; set; }
     }
 }

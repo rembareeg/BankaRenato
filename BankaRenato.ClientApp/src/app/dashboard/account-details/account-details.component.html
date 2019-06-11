@@ -1,4 +1,7 @@
-Account details:
+<div class="but" (click)="back()">
+    <a>User accounts</a>
+  </div>
+<h3>Account details:</h3>
 <p>
  Account number: {{userAccount?.id}}
 </p>
@@ -7,32 +10,67 @@ Account details:
 </p>
 <div>
   <ng-container *ngIf="userAccount.cards.length > 0; else elseTemplate">
+    <h2>Card preview:</h2>
     <div *ngFor="let card of userAccount.cards">
 
+      <ng-container *ngIf="toggleEdit != card.id; else elseTemplate">
+        <div class="box">
+          <div class="left">
+          <p>Card number: {{card.id}}</p>
+          <p>Card type: {{card.type}}</p>
+          </div>
+          <div class="right">
+            <div *ngIf="role === 'Admin'" >
+              <div class="but" (click)="editCard(card.id, card.cardType)">
+                <a>Edit</a>
+              </div>
+              <div class="but" (click)="deleteCard(card.id)">
+                <a>Delete</a>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </ng-container>
+      <ng-template #elseTemplate>
+          <div class="box">
+              <form #registerForm="ngForm" (ngSubmit)="updateCard()">
+                <div class="left">
+                <p>Card number: {{card.id}}</p>
+                <p>Card type: <select id="cardType" [(ngModel)]="updateModel.CardType" name="cardtype">
+                    <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
+                 </select></p>
+                </div>
+                <div class="right">
+                  <div *ngIf="role === 'Admin'" >
+                    
+                      <button type="submit" class="registerbtn">Save</button>
+                    
+                    <div class="but" (click)="editCard(-1, 0)">
+                      <a>Cancle</a>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div> 
+      </ng-template>
       
-    <div class="box">
-      <div class="left">
-        <p>Card number: {{card.id}}</p>
-        <p>Card type: {{card.type}}</p>
-        </div>
-      
-    </div>
+       
   </div>
 
   </ng-container>
   <ng-template #elseTemplate>
     <p>You dont have any cards for this accout, feel free to create</p>
   </ng-template>
-  <div>
-    <form #registerForm="ngForm" (ngSubmit)="createCard()">
-        <div class="container">
-          <h1>Create card</h1>
-          Type: <select id="cardType" [(ngModel)]="model.CardType" name="cardtype">
-             <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
-          </select>
-          <button type="submit" class="registerbtn">Create</button>
-        </div>
-    </form>
-  </div>
+
+  <form #registerForm="ngForm" (ngSubmit)="createCard()">
+      <div class="container">
+        <h1>Create card</h1>
+        Type: <select id="cardType" [(ngModel)]="model.CardType" name="cardtype">
+            <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
+        </select>
+        <button type="submit" class="registerbtn">Create</button>
+      </div>
+  </form>
+
   
 </div>

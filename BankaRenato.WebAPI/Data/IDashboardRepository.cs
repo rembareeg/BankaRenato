@@ -1,4 +1,5 @@
-﻿using BankaRenato.WebAPI.Models;
+﻿using BankaRenato.WebAPI.Dtos;
+using BankaRenato.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace BankaRenato.WebAPI.Data
         Task<IEnumerable<CardType>> GetCardTypes();
         Task<IEnumerable<Card>> GetAccountCards(int id);
         Task<bool> DeleteUser(int id);
-        
+        Task<bool> DeleteAccount(int id);
+        Task<bool> DeleteCard(int id);
+        Task<bool> UpdateCard(int id, int cardType);
+        Task<bool> UpdateUser(UserForUpdateDto user);
+
+
     }
 }

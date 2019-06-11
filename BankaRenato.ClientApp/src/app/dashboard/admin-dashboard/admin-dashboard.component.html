@@ -13,6 +13,9 @@
         <div class="but" [routerLink]="[ '/dashboard/', user.id ]">
           <a>Details</a>
         </div>
+        <div class="but" [routerLink]="[ '/edit-user/', user.id]">
+          <a>Edit</a>
+        </div>
         <div class="but" (click)="deleteUser(user.id)">
           <a>Delete</a>
         </div>

@@ -14,12 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if(this.authService.loggedIn())
     {
-      if(this.authService.role() === 'Admin')
-      {
-        this.router.navigate(['dashboard-admin']);
-      }else{
-        this.router.navigate(['dashboard']);
-      }
+      this.router.navigate(['dashboard']);
     }
   }
 

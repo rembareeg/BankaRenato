@@ -8,6 +8,7 @@ namespace BankaRenato.WebAPI.Dtos
     public class CardForDashboardDto
     {
         public int Id { get; set; }
+        public int CardType { get; set; }
         public string Type { get; set; }
     }
 }

@@ -31,10 +31,8 @@ export class AdminDashboardComponent implements OnInit {
        this.alertify.success("User with id: " + id + " successfully deleted");
        this.loadUsers();
       },error =>{
-        this.alertify.success(error) 
+        this.alertify.error(error) 
       }
-      
     );
   }
-
 }

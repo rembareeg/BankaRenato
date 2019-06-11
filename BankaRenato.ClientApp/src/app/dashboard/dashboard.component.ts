@@ -21,11 +21,7 @@ export class DashboardComponent implements OnInit {
   
 
   ngOnInit() {
-    if(this.route.snapshot.params['id'] == null){
-      this.loadUser();
-    }else{
-      this.loadUserById();
-    }
+    this.getUser();
     this.role = this.authService.role();
     
   }
@@ -37,7 +33,7 @@ export class DashboardComponent implements OnInit {
       },error => {
         this.alertify.error(error);
       }, () =>{
-        this.loadUser();
+        this.getUser();
       })
     });  
   }  
@@ -57,15 +53,29 @@ export class DashboardComponent implements OnInit {
       this.alertify.error(error);
     });
   }
-
-  deleteUser(id: number){
-    this.dashboardService.deleteUser(id).subscribe(
+  
+  getUser(){
+    console.log(0);
+    if(this.route.snapshot.params['id'] == null){
+      this.loadUser();
+      console.log(1);
+    }else{
+      this.loadUserById();
+      console.log(2);
+    }
+  }
+  deleteAccount(id: number){
+    this.dashboardService.deleteAccount(id).subscribe(
       () => {
-       this.alertify.success("User with id: " + id + "successfully deleted") 
+        this.getUser();
+       this.alertify.success("Account with id: " + id + " successfully deleted");
+       
       },error =>{
-        this.alertify.success(error) 
+        this.alertify.error(error) 
       }
     );
+    
   }
+  
 
 }

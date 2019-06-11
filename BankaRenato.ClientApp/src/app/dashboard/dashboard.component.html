@@ -1,26 +1,34 @@
-<ng-container *ngIf="role === 'Admin'; else elseTemplate">
-  
-</ng-container>
-<ng-template #elseTemplate>
-  <div *ngIf="user != null" class="profile">
-    <div class = "inf">Username: {{user.username}}</div>
-    <div class = "inf">Email: {{user.email}}</div>
-    <div class = "inf">First name: {{user.firstName}}</div>
-    <div class = "inf">Last name: {{user.lastName}}</div>
-    <div>
-      <ng-container *ngIf="user.accounts.length > 0; else elseTemplate">
-        <div *ngFor="let account of user.accounts">
-          <app-account-dashboard [account]="account"></app-account-dashboard>
+<div *ngIf="user != null" class="profile">
+  <div class = "inf">Username: {{user.username}}</div>
+  <div class = "inf">Email: {{user.email}}</div>
+  <div class = "inf">First name: {{user.firstName}}</div>
+  <div class = "inf">Last name: {{user.lastName}}</div>
+</div>
+<div>
+  <ng-container *ngIf="user.accounts.length > 0; else elseTemplate">
+    <div *ngFor="let account of user.accounts">
+      <div class="box">
+        <div class="left">
+          <p>Account number: {{account.id}}</p>
+          <p>Account balance: {{account.balance}} {{account.currency}}</p>
+          </div>
+        <div class="right">
+          <div class="but" [routerLink]="[ '/dashboard/account/', account.id ]">
+            <a>Details</a>
+          </div>
+          <div *ngIf="role === 'Admin'" class="but" (click)="deleteAccount(account.id)">
+            <a>Delete</a>
+          </div>
         </div>
-      </ng-container>
-      <ng-template #elseTemplate>
-        <p>You dont have any account, feel free to open one or more</p>
-      </ng-template>
       
+      </div>
     </div>
-    <a (click)="openAccount()">Open new account</a>
-  </div>
-</ng-template>
-
+  </ng-container>
+  <ng-template #elseTemplate>
+    <p>You dont have any account, feel free to open one or more</p>
+  </ng-template>
+  
+</div>
+  <a class="bb"(click)="openAccount()">Open new account</a>
 
 

@@ -47,5 +47,18 @@ export class DashboardService {
   deleteUser(id: number){
     return this.http.delete(environment.baseUrl + 'dashboard/deleteuser/' + id);
   }
- 
+
+  deleteAccount(id: number){
+    return this.http.delete(environment.baseUrl + 'dashboard/deleteaccount/' + id);
+  }
+
+  deleteCard(id: number){
+    return this.http.delete(environment.baseUrl + 'dashboard/deletecard/' + id);
+  }
+  updateCard(card: Card){
+    return this.http.post(environment.baseUrl + 'dashboard/updatecard/', card);
+  }
+  updateUser(model: any){
+    return this.http.put(environment.baseUrl + 'dashboard/updateuser/', model);
+  }
 }
