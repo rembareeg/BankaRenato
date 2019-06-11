@@ -1,0 +1,24 @@
+<div *ngFor="let user of users">
+  <div>
+    <div class="box">
+      <div class="left pad">
+        <p>Account id: {{user.id}}</p>
+        <p>Name: {{user.firstName}} {{user.lastName}}</p>
+        </div>
+        <div class="left pad">
+          <p>Username: {{user.username}}</p>
+          <p>Email : {{user.email}}</p>
+          </div>
+      <div class="right">
+        <div class="but" [routerLink]="[ '/dashboard/', user.id ]">
+          <a>Details</a>
+        </div>
+        <div class="but" (click)="deleteUser(user.id)">
+          <a>Delete</a>
+        </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
+

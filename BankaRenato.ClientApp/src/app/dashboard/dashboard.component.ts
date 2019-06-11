@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
 import { DashboardService } from '../_services/dashboard.service';
 import { AlertifyService } from '../_services/alertify.service';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,12 +13,21 @@ import { AlertifyService } from '../_services/alertify.service';
 })
 export class DashboardComponent implements OnInit {
   user: User;
+  role: string;
 
+  constructor(private dashboardService: DashboardService, private authService: AuthService, private alertify: AlertifyService,
+    private route: ActivatedRoute) { }
 
-  constructor(private dashboardService: DashboardService, private alertify: AlertifyService) { }
+  
 
   ngOnInit() {
-    this.loadUser();
+    if(this.route.snapshot.params['id'] == null){
+      this.loadUser();
+    }else{
+      this.loadUserById();
+    }
+    this.role = this.authService.role();
+    
   }
 
   openAccount(){
@@ -33,10 +45,27 @@ export class DashboardComponent implements OnInit {
   loadUser() {
     this.dashboardService.getUser().subscribe((user: User) => {
       this.user = user;
-      console.log(user.accounts);
     }, error => {
       this.alertify.error(error);
     });
+  }
+
+  loadUserById(){
+    this.dashboardService.getUserById(this.route.snapshot.params['id']).subscribe((user: User) => {
+      this.user = user;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
+  deleteUser(id: number){
+    this.dashboardService.deleteUser(id).subscribe(
+      () => {
+       this.alertify.success("User with id: " + id + "successfully deleted") 
+      },error =>{
+        this.alertify.success(error) 
+      }
+    );
   }
 
 }

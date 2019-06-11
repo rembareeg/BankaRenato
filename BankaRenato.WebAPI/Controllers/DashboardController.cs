@@ -24,7 +24,8 @@ namespace BankaRenato.WebAPI.Controllers
             _repo = repo;
             _mapper = mapper;
         }
-        
+
+        [Authorize(Roles = "Client, Admin")]
         [HttpGet("getuser/{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -37,6 +38,7 @@ namespace BankaRenato.WebAPI.Controllers
             return Ok(dashboardUser);
         }
 
+        [Authorize(Roles = "Client, Admin")]
         [HttpGet("getaccount/{id}")]
         public async Task<IActionResult> GetAccount(int id)
         {
@@ -49,12 +51,14 @@ namespace BankaRenato.WebAPI.Controllers
             return Ok(accountToReturn);
         }
 
+        [Authorize(Roles = "Client, Admin")]
         [HttpGet("getcardtypes")]
         public async Task<IActionResult> GetCardTypes()
         {
             return Ok((await _repo.GetCardTypes()).ToList());
         }
 
+        [Authorize(Roles = "Client, Admin")]
         [HttpPost("openaccount")]
         public async Task<IActionResult> OpenAccount(UserForDashboardDto user)
         {
@@ -63,6 +67,7 @@ namespace BankaRenato.WebAPI.Controllers
             return Unauthorized();
         }
 
+        [Authorize(Roles = "Client, Admin")]
         [HttpPost("createcard")]
         public async Task<IActionResult> CreateCard(CardForCreateDto card)
         {
@@ -70,6 +75,24 @@ namespace BankaRenato.WebAPI.Controllers
 
             return Unauthorized();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("getusersbyrole/{id}")]
+        public async Task<IActionResult> GetUsersByRole(string id)
+        {
+            return Ok((await _repo.GetUsersByRole(id)).ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("deleteuser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            if (await _repo.DeleteUser(id)) return Ok();
+
+            return Unauthorized();
+        }
+
+
 
     }
 }

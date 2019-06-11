@@ -8,5 +8,8 @@ namespace BankaRenato.WebAPI.Models
         public int Id { get; set; }
         public int AccountId { get; set; }
         public int CardType { get; set; }
+
+        public virtual Account Account { get; set; }
+        public virtual CardType CardTypeNavigation { get; set; }
     }
 }

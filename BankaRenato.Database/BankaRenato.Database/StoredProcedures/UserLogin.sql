@@ -8,7 +8,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    SELECT TOP 1 Id, Username, Password, Salt, Email, FirstName, LastName, Permission
+    SELECT TOP 1 Id, Username, Password, Salt, Email, FirstName, LastName, Role
 		FROM dbo.[User] WHERE Username=@username AND Password = HASHBYTES('SHA2_512', @password+CAST(Salt AS NVARCHAR(36)))
 
 END

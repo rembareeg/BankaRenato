@@ -22,7 +22,15 @@ export class NavComponent implements OnInit {
     }, error => {
       this.alertify.error('Failed to login');
     }, () => {
-      this.router.navigate(['dashboard']);
+      if(this.authService.role() === 'Admin'){
+        this.router.navigate(['dashboard-admin']);
+      }else if(this.authService.role() === 'Client'){
+        this.router.navigate(['dashboard']);
+      }else{
+        this.logout();
+      }
+    
+       
     });
   }
 

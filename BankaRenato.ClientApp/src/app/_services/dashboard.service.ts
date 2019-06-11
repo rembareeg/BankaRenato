@@ -19,6 +19,15 @@ export class DashboardService {
     return this.http.get<User>(environment.baseUrl + 'dashboard/getuser/' + this.authService.decodedToken.nameid);
   }
 
+  getUserById(id: number): Observable<User>{
+
+    return this.http.get<User>(environment.baseUrl + 'dashboard/getuser/' + id);
+  }
+
+  getUsersByRole(role: string): Observable<User[]>{
+    return this.http.get<User[]>(environment.baseUrl + 'dashboard/getusersbyrole/' + role);
+  }
+
   getAccount(id: number): Observable<UserAccount>{
     return this.http.get<UserAccount>(environment.baseUrl + 'dashboard/getaccount/' + id);
   }
@@ -34,4 +43,9 @@ export class DashboardService {
   createCard(model: any){
     return this.http.post(environment.baseUrl + 'dashboard/createcard', model);
   }
+
+  deleteUser(id: number){
+    return this.http.delete(environment.baseUrl + 'dashboard/deleteuser/' + id);
+  }
+ 
 }

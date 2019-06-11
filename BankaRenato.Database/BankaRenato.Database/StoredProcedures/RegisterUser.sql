@@ -13,8 +13,8 @@ BEGIN
     DECLARE @salt UNIQUEIDENTIFIER=NEWID()
     BEGIN TRY
 
-        INSERT INTO dbo.[User] (Username, Password, Salt, FirstName, LastName, Email, Permission)
-        VALUES(@username, HASHBYTES('SHA2_512', @password + CAST(@salt AS NVARCHAR(36))), @salt, @firstName, @lastName, @email, 0)
+        INSERT INTO dbo.[User] (Username, Password, Salt, FirstName, LastName, Email, Role)
+        VALUES(@username, HASHBYTES('SHA2_512', @password + CAST(@salt AS NVARCHAR(36))), @salt, @firstName, @lastName, @email, 'Client')
 
        SET @response = 1
 

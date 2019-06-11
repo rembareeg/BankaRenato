@@ -124,5 +124,31 @@ namespace BankaRenato.WebAPI.Data
         {
             return await _context.Card.Where(cards => cards.AccountId == id).ToListAsync();
         }
+
+        public async Task<IEnumerable<User>> GetUsersByRole(string role)
+        {
+            return await _context.User.Where(users => users.Role == role).ToListAsync();
+        }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            SqlParameter sqlUserId = new SqlParameter
+            {
+                ParameterName = "@userId",
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                Value = id
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE DeleteUser @userId, @response OUT", sqlUserId, sqlResponse);
+
+            return (bool)sqlResponse.Value;
+        }
     }
 }

@@ -5,8 +5,11 @@
     <p>Account balance: {{account.balance}} {{account.currency}}</p>
     </div>
   <div class="right">
-    <div class="but" [routerLink]="[ '/dashboard/', account.id ]">
+    <div class="but" [routerLink]="[ '/dashboard/account/', account.id ]">
       <a>Details</a>
+    </div>
+    <div *ngIf="role === 'Admin'" class="but" [routerLink]="[ '/dashboard' ]">
+      <a>Delete</a>
     </div>
 </div>
 
