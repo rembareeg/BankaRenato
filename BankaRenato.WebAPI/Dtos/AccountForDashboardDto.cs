@@ -8,6 +8,7 @@ namespace BankaRenato.WebAPI.Dtos
     public class AccountForDashboardDto
     {
         public int Id { get; set; }
+        public string Name { get; set;}
         public string Currency { get; set; }
         public decimal Balance { get; set; }
         public ICollection<CardForDashboardDto> Cards { get; set; }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/_services/dashboard.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserAccount } from 'src/app/_models/userAccount';
 import { Card } from 'src/app/_models/card';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -17,18 +17,38 @@ export class AccountDetailsComponent implements OnInit {
   model: any = {};
   updateModel: any = {};
   cardTypes: Card [];
-  role: string;
+  isAdmin: boolean;
+  owner: any = {};
   toggleEdit: number = -1;
 
   constructor(private dashboardService: DashboardService, private alertify: AlertifyService, 
-    private authService: AuthService, private route: ActivatedRoute, private location: Location) { }
+    private authService: AuthService, private route: ActivatedRoute, private location: Location,
+    private router: Router) { }
 
   ngOnInit() {
     this.model.CardType = 0;
-    this.role = this.authService.role();
-    this.displayAccount();
-    this.getCardTypes();
+    this.isAdmin = this.authService.isAdmin();
+    this.owner.UserId =  this.authService.decodedToken.nameid;
+    this.owner.AccountId = this.route.snapshot.params['id'];
+    
+    if(!this.isAdmin)
+    {
+      this.dashboardService.userOwnsAccount(this.owner).subscribe(next => {
+        this.displayAccount();
+        this.getCardTypes();
+        },error => {
+          this.alertify.error("Permission denied!");
+          this.router.navigate(['dashboard']);
+        }
+      );
+    }else{
+      this.displayAccount();
+      this.getCardTypes();
+    }
+    
   }
+    
+  
 
   displayAccount(){
     this.dashboardService.getAccount(this.route.snapshot.params['id']).subscribe((account: UserAccount) => {
@@ -91,5 +111,4 @@ export class AccountDetailsComponent implements OnInit {
   back(){
     this.location.back();
   }
-
 }

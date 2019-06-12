@@ -6,10 +6,13 @@
  Account number: {{userAccount?.id}}
 </p>
 <p>
+  Account name: {{userAccount?.name}}
+</p>
+<p>
  Account balance: {{userAccount?.balance}} {{userAccount?.currency}}
 </p>
 <div>
-  <ng-container *ngIf="userAccount.cards.length > 0; else elseTemplate">
+  <ng-container *ngIf="userAccount?.cards.length > 0; else elseTemplate">
     <h2>Card preview:</h2>
     <div *ngFor="let card of userAccount.cards">
 
@@ -20,7 +23,7 @@
           <p>Card type: {{card.type}}</p>
           </div>
           <div class="right">
-            <div *ngIf="role === 'Admin'" >
+            <div *ngIf="isAdmin" >
               <div class="but" (click)="editCard(card.id, card.cardType)">
                 <a>Edit</a>
               </div>
@@ -32,26 +35,26 @@
         </div> 
       </ng-container>
       <ng-template #elseTemplate>
-          <div class="box">
-              <form #registerForm="ngForm" (ngSubmit)="updateCard()">
-                <div class="left">
-                <p>Card number: {{card.id}}</p>
-                <p>Card type: <select id="cardType" [(ngModel)]="updateModel.CardType" name="cardtype">
-                    <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
-                 </select></p>
-                </div>
-                <div class="right">
-                  <div *ngIf="role === 'Admin'" >
-                    
-                      <button type="submit" class="registerbtn">Save</button>
-                    
-                    <div class="but" (click)="editCard(-1, 0)">
-                      <a>Cancle</a>
-                    </div>
+        <div class="box">
+            <form #registerForm="ngForm" (ngSubmit)="updateCard()">
+              <div class="left">
+              <p>Card number: {{card.id}}</p>
+              <p>Card type: <select id="cardType" [(ngModel)]="updateModel.CardType" name="cardtype">
+                  <option *ngFor="let card of cardTypes" [ngValue]="card.id" >{{card.type}}</option>
+                </select></p>
+              </div>
+              <div class="right">
+                <div *ngIf="isAdmin" >
+                  
+                    <button type="submit" class="registerbtn">Save</button>
+                  
+                  <div class="but" (click)="editCard(-1, 0)">
+                    <a>Cancle</a>
                   </div>
                 </div>
-              </form>
-            </div> 
+              </div>
+            </form>
+          </div> 
       </ng-template>
       
        

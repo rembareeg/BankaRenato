@@ -38,6 +38,14 @@ namespace BankaRenato.WebAPI.Models
             {
                 entity.Property(e => e.Balance).HasColumnType("money");
 
+                entity.Property(e => e.Currency)
+                    .IsRequired()
+                    .HasMaxLength(3);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(40);
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Account)
                     .HasForeignKey(d => d.UserId)

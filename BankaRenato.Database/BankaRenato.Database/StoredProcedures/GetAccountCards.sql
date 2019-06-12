@@ -4,8 +4,7 @@
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT cards.Id AS Id, cardTypes.Type as Type FROM dbo.Card cards 
-		JOIN dbo.CardType cardTypes ON cards.CardType = cardTypes.id
-			WHERE cards.AccountId = @accountId
+	SELECT c.Id AS Id, c.CardType AS CardType, ct.Type AS TYPE FROM dbo.[Card] c 
+		JOIN dbo.[CardType] ct ON ct.id = c.CardType WHERE c.AccountId = @accountId
 
 END

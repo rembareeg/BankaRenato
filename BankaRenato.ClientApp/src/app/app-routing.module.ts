@@ -9,7 +9,6 @@ import { AdminGuard } from './_guards/admin.guard';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 import { UserEditComponent } from './dashboard/user-edit/user-edit.component';
 
-
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
@@ -24,7 +23,7 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         children: [
           {path: 'edit-user/:id', component: UserEditComponent},
-          {path: 'dashboard', component: AdminDashboardComponent},
+          {path: 'dashboard-admin', component: AdminDashboardComponent},
           {path: 'dashboard/:id', component: DashboardComponent}
           
          

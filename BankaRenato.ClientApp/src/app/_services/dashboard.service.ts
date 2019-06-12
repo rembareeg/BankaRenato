@@ -32,7 +32,7 @@ export class DashboardService {
     return this.http.get<UserAccount>(environment.baseUrl + 'dashboard/getaccount/' + id);
   }
   
-  openAccount(user: User){    
+  openAccount(user: any){    
     return this.http.post(environment.baseUrl + 'dashboard/openaccount', user);   
   }
 
@@ -56,9 +56,15 @@ export class DashboardService {
     return this.http.delete(environment.baseUrl + 'dashboard/deletecard/' + id);
   }
   updateCard(card: Card){
-    return this.http.post(environment.baseUrl + 'dashboard/updatecard/', card);
+    return this.http.post(environment.baseUrl + 'dashboard/updatecard', card);
   }
   updateUser(model: any){
-    return this.http.put(environment.baseUrl + 'dashboard/updateuser/', model);
+    return this.http.put(environment.baseUrl + 'dashboard/updateuser', model);
+  }
+  updateAccount(model: any){
+    return this.http.post(environment.baseUrl + 'dashboard/updateaccount', model);
+  }
+  userOwnsAccount(model: any){
+    return this.http.post(environment.baseUrl + 'dashboard/userownsaccount', model);
   }
 }

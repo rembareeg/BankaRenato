@@ -13,7 +13,10 @@ import { error } from '@angular/compiler/src/util';
 })
 export class DashboardComponent implements OnInit {
   user: User;
-  role: string;
+  isAdmin: boolean;
+  model: any  = {};
+  updateModel: any  = {};
+  toggleEdit: number = -1;
 
   constructor(private dashboardService: DashboardService, private authService: AuthService, private alertify: AlertifyService,
     private route: ActivatedRoute) { }
@@ -22,13 +25,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
-    this.role = this.authService.role();
+    this.isAdmin = this.authService.isAdmin();
     
   }
 
   openAccount(){
+    this.model.UserId = this.user.id;
     this.alertify.authorize("Account open", "Are you sure you want to open new account", () => {
-      this.dashboardService.openAccount(this.user).subscribe(next => {
+      this.dashboardService.openAccount(this.model).subscribe(next => {
         this.alertify.success("Successfully created new account");
       },error => {
         this.alertify.error(error);
@@ -55,13 +59,10 @@ export class DashboardComponent implements OnInit {
   }
   
   getUser(){
-    console.log(0);
     if(this.route.snapshot.params['id'] == null){
       this.loadUser();
-      console.log(1);
     }else{
       this.loadUserById();
-      console.log(2);
     }
   }
   deleteAccount(id: number){
@@ -74,7 +75,25 @@ export class DashboardComponent implements OnInit {
         this.alertify.error(error) 
       }
     );
-    
+  }
+
+  editAccount(id: number, name: string, balance: number){
+    this.toggleEdit = id;
+    this.updateModel.Name = name;
+    this.updateModel.Balance = balance;
+    this.loadUserById();
+  }
+  updateAccount(){
+    this.updateModel.Id = this.toggleEdit;
+    this.dashboardService.updateAccount(this.updateModel).subscribe(next => {
+      this.alertify.success('Success');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+      
+      this.loadUserById();
+      this.toggleEdit = -1;
+    });
   }
   
 

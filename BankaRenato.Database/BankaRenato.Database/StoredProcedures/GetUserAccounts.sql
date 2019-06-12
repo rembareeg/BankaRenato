@@ -4,6 +4,6 @@
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT Id, UserId, Currency, Balance FROM Account WHERE UserId = @userId
+	SELECT Id, UserId, Name, Currency, Balance FROM Account WHERE UserId = @userId
 
 END

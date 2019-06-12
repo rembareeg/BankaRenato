@@ -43,10 +43,10 @@ namespace BankaRenato.WebAPI.Controllers
         public async Task<IActionResult> GetAccount(int id)
         {
             Account account = await _repo.GetUserAccount(id);
-            IEnumerable<Card> cards = await _repo.GetAccountCards(account.Id);
+            IEnumerable<CardForDashboardDto> cards = await _repo.GetAccountCards(account.Id);
 
             AccountForDashboardDto accountToReturn = _mapper.Map<AccountForDashboardDto>(account);
-            accountToReturn.Cards = _mapper.Map<IEnumerable<CardForDashboardDto>>(cards).ToList();
+            accountToReturn.Cards = cards.ToList();
 
             return Ok(accountToReturn);
         }
@@ -60,9 +60,9 @@ namespace BankaRenato.WebAPI.Controllers
 
         [Authorize(Roles = "Client, Admin")]
         [HttpPost("openaccount")]
-        public async Task<IActionResult> OpenAccount(UserForDashboardDto user)
+        public async Task<IActionResult> OpenAccount(AccountForOpenDto user)
         {
-            if (await _repo.OpenAccount(user.Id)) return Ok();
+            if (await _repo.OpenAccount(user.UserId, user.Name)) return Ok();
 
             return Unauthorized();
         }
@@ -115,17 +115,31 @@ namespace BankaRenato.WebAPI.Controllers
 
             return Unauthorized();
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPut("updateuser")]
         public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
         {
-
             if (await _repo.UpdateUser(userForUpdate))
             {
                 userForUpdate.Password = "";
                 return Ok(userForUpdate);
             }                
+
+            return Unauthorized();
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("updateaccount")]
+        public async Task<IActionResult> UpdateAccount(AccountForUpdateDto account)
+        {
+            if (await _repo.UpdateAccount(account)) return Ok();
+
+            return Unauthorized();
+        }
+        [Authorize(Roles = "Client")]
+        [HttpPost("userownsaccount")]
+        public async Task<IActionResult> UserOwnsAccount(UserOwnsAccount model)
+        {
+            if (await _repo.UserOwnsAccount(model.UserId, model.AccountId)) return Ok();
 
             return Unauthorized();
         }

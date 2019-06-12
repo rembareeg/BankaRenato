@@ -10,19 +10,27 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-
+  isAdmin: boolean;
   constructor(public authService: AuthService, private  alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
+    
   }
 
   login(){
+    
     this.authService.login(this.model).subscribe(next => {
       this.alertify.success('Logged in successfully');
+      this.isAdmin = this.authService.isAdmin();
     }, error => {
       this.alertify.error('Failed to login');
     }, () => {
-        this.router.navigate(['dashboard']);  
+      if(this.isAdmin){
+        this.router.navigate(['dashboard-admin']);
+      }else{
+        this.router.navigate(['dashboard']);
+      }
+          
        
     });
   }
@@ -31,8 +39,11 @@ export class NavComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
+  
+
   logout(){
-    localStorage.removeItem('token');
+    this.authService.resetToken();
+    this.isAdmin = this.authService.isAdmin();
     this.alertify.message('logged out');
     this.router.navigate(['home']);
   }

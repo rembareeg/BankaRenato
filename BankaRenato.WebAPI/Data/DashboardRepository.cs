@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BankaRenato.WebAPI.Dtos;
 using BankaRenato.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Snickler.EFCore;
 
 namespace BankaRenato.WebAPI.Data
 {
@@ -49,14 +50,21 @@ namespace BankaRenato.WebAPI.Data
         /// </summary>
         /// <param name="id">User id</param>
         /// <returns></returns>
-        public async Task<bool> OpenAccount(int id)
+        public async Task<bool> OpenAccount(int id, string name)
         {
             SqlParameter sqlUserId = new SqlParameter
             {
                 ParameterName = "@userId",
-                DbType = DbType.String,
+                DbType = DbType.Int32,
                 Direction = ParameterDirection.Input,
                 Value = id
+            };
+            SqlParameter sqlName = new SqlParameter
+            {
+                ParameterName = "@name",
+                DbType = DbType.String,
+                Direction = ParameterDirection.Input,
+                Value = name
             };
             SqlParameter sqlResponse = new SqlParameter
             {
@@ -65,7 +73,7 @@ namespace BankaRenato.WebAPI.Data
                 Direction = ParameterDirection.Output
             };
 
-            await _context.Database.ExecuteSqlCommandAsync("EXECUTE OpenAccount @userId, @response OUT", sqlUserId, sqlResponse);
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE OpenAccount @userId, @name, @response OUT", sqlUserId, sqlName, sqlResponse);
 
             return (bool)sqlResponse.Value;
         }
@@ -111,7 +119,10 @@ namespace BankaRenato.WebAPI.Data
 
             return (bool)sqlResponse.Value;
         }
-
+        /// <summary>
+        /// Gets all list of types 
+        /// /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<CardType>> GetCardTypes()
         {
             return await _context.CardType.ToListAsync();
@@ -121,16 +132,32 @@ namespace BankaRenato.WebAPI.Data
         /// </summary>
         /// <param name="id">Account id</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Card>> GetAccountCards(int id)
+        public async Task<IEnumerable<CardForDashboardDto>> GetAccountCards(int id)
         {
-            return await _context.Card.Where(cards => cards.AccountId == id).ToListAsync();
-        }
+            IEnumerable<CardForDashboardDto> cards = null;
+            await _context.LoadStoredProc("dbo.GetAccountCards")
+               .WithSqlParam("accountId", id)
+               .ExecuteStoredProcAsync((handler) =>
+               {
+                    cards = handler.ReadToList<CardForDashboardDto>();
 
+               });
+            return cards;
+        }
+        /// <summary>
+        /// Gets list of users by role
+        /// </summary>
+        /// <param name="role">Role etc (client/admin)</param>
+        /// <returns></returns>
         public async Task<IEnumerable<User>> GetUsersByRole(string role)
         {
             return await _context.User.Where(users => users.Role == role).ToListAsync();
         }
-
+        /// <summary>
+        /// Delets user by id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
         public async Task<bool> DeleteUser(int id)
         {
             SqlParameter sqlUserId = new SqlParameter
@@ -151,7 +178,11 @@ namespace BankaRenato.WebAPI.Data
 
             return (bool)sqlResponse.Value;
         }
-
+        /// <summary>
+        /// Delets account by id
+        /// </summary>
+        /// <param name="id">account id</param>
+        /// <returns></returns>
         public async Task<bool> DeleteAccount(int id)
         {
             SqlParameter sqlAccountId = new SqlParameter
@@ -172,7 +203,11 @@ namespace BankaRenato.WebAPI.Data
 
             return (bool)sqlResponse.Value;
         }
-
+        /// <summary>
+        /// Delets card by id
+        /// </summary>
+        /// <param name="id">card id</param>
+        /// <returns></returns>
         public async Task<bool> DeleteCard(int id)
         {
             SqlParameter sqlCardId = new SqlParameter
@@ -193,7 +228,12 @@ namespace BankaRenato.WebAPI.Data
 
             return (bool)sqlResponse.Value;
         }
-
+        /// <summary>
+        /// Updates card
+        /// </summary>
+        /// <param name="id">Card id</param>
+        /// <param name="cardType">Card type</param>
+        /// <returns></returns>
         public async Task<bool> UpdateCard(int id, int cardType)
         {
             SqlParameter sqlCardId = new SqlParameter
@@ -221,7 +261,11 @@ namespace BankaRenato.WebAPI.Data
 
             return (bool)sqlResponse.Value;
         }
-
+        /// <summary>
+        /// Updates user
+        /// </summary>
+        /// <param name="user"> User for update</param>
+        /// <returns></returns>
         public async Task<bool> UpdateUser(UserForUpdateDto user)
         {
             SqlParameter[] parameters = new SqlParameter[]
@@ -238,6 +282,58 @@ namespace BankaRenato.WebAPI.Data
             await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateUser @userId, @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
 
             return (bool)parameters[parameters.Length - 1].Value;
+        }
+        /// <summary>
+        /// Updates account
+        /// </summary>
+        /// <param name="account">Account for update</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateAccount(AccountForUpdateDto account)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter{ParameterName = "@accountId", DbType = DbType.Int32, Direction = ParameterDirection.Input, Value = account.Id},
+                new SqlParameter{ParameterName = "@name", DbType = DbType.String, Direction = ParameterDirection.Input, Value = account.Name},
+                new SqlParameter{ParameterName = "@balance", DbType = DbType.Decimal, Direction = ParameterDirection.Input, Value = account.Balance},
+                new SqlParameter{ParameterName = "@response", DbType = DbType.Boolean,Direction = ParameterDirection.Output}
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateAccount @accountId, @name, @balance, @response OUT", parameters);
+
+            return (bool)parameters[parameters.Length - 1].Value;
+        }
+        /// <summary>
+        /// Check if user is owner of account
+        /// </summary>
+        /// <param name="userId">User id</param>
+        /// <param name="accountId">Account id</param>
+        /// <returns></returns>
+        public async Task<bool> UserOwnsAccount(int userId, int accountId)
+        {
+            SqlParameter sqlUserId = new SqlParameter
+            {
+                ParameterName = "@cardId",
+                DbType = DbType.Int16,
+                Direction = ParameterDirection.Input,
+                Value = userId
+            };
+            SqlParameter sqlAccountId = new SqlParameter
+            {
+                ParameterName = "@cardType",
+                DbType = DbType.Int16,
+                Direction = ParameterDirection.Input,
+                Value = accountId
+            };
+            SqlParameter sqlResponse = new SqlParameter
+            {
+                ParameterName = "@response",
+                DbType = DbType.Boolean,
+                Direction = ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UserOwnsAccount @cardId, @cardType, @response OUT", sqlUserId, sqlAccountId, sqlResponse);
+
+            return (bool)sqlResponse.Value;
         }
     }
 }

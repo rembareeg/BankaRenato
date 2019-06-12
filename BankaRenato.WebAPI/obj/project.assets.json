@@ -3000,6 +3000,18 @@
           }
         }
       },
+      "Snickler.EFCore/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.1.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Snickler.EFCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Snickler.EFCore.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -7727,6 +7739,19 @@
         "version.txt"
       ]
     },
+    "Snickler.EFCore/1.0.3": {
+      "sha512": "0h3XpiSHFKxbvTuSnsv9l2JIS+y24nVJTC3lsRVRBRfbZ0QMDDnudIgEpDuZHgpAebEHVWxZIPF8mE66p8hltA==",
+      "type": "package",
+      "path": "snickler.efcore/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.4/Snickler.EFCore.dll",
+        "lib/netstandard2.0/Snickler.EFCore.dll",
+        "snickler.efcore.1.0.3.nupkg.sha512",
+        "snickler.efcore.nuspec"
+      ]
+    },
     "System.AppContext/4.3.0": {
       "sha512": "fKC+rmaLfeIzUhagxY17Q9siv/sPrjjKcfNg1Ic8IlQkZLipo8ljcaZQu4VtI4Jqbzjc2VTjzGLF6WmsRXAEgA==",
       "type": "package",
@@ -12130,7 +12155,8 @@
       "Microsoft.EntityFrameworkCore >= 2.2.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.4",
       "Microsoft.EntityFrameworkCore.Tools >= 2.2.4",
-      "Microsoft.NETCore.App >= 2.2.0"
+      "Microsoft.NETCore.App >= 2.2.0",
+      "Snickler.EFCore >= 1.0.3"
     ]
   },
   "packageFolders": {
@@ -12208,6 +12234,10 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "Snickler.EFCore": {
+            "target": "Package",
+            "version": "[1.0.3, )"
           }
         },
         "imports": [

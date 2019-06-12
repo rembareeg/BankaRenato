@@ -19,7 +19,6 @@ import { environment } from 'src/environments/environment';
 import { AccountDetailsComponent } from './dashboard/account-details/account-details.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 import { AdminGuard } from './_guards/admin.guard';
-import { DashboardResolver } from './_resolvers/dashboard.resolver';
 import { UserEditComponent } from './dashboard/user-edit/user-edit.component';
 
 
@@ -59,8 +58,8 @@ export function tokenGetter() {
       AlertifyService,
       AuthGuard,
       DashboardService,
-      AdminGuard,
-      DashboardResolver
+      AdminGuard
+
    ],
    bootstrap: [
       AppComponent

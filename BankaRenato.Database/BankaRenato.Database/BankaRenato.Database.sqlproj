@@ -79,6 +79,9 @@
     <Build Include="StoredProcedures\DeleteCard.sql" />
     <Build Include="StoredProcedures\UpdateCard.sql" />
     <Build Include="StoredProcedures\UpdateUser.sql" />
+    <Build Include="StoredProcedures\UpdateAccount.sql" />
+    <Build Include="StoredProcedures\UserOwnsAccount.sql" />
+    <Build Include="StoredProcedures\SetupDatabase.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BankaRenato.Database.publish.xml" />
