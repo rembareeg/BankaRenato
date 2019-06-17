@@ -62,7 +62,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("openaccount")]
         public async Task<IActionResult> OpenAccount(AccountForOpenDto user)
         {
-            if (await _repo.OpenAccount(user.UserId, user.Name)) return Ok();
+            if (await _repo.OpenAccount(user.UserId, user.Name))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -71,7 +74,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("createcard")]
         public async Task<IActionResult> CreateCard(CardForCreateDto card)
         {
-            if (await _repo.CreateCard(card.AccountId, card.CardType)) return Ok();
+            if (await _repo.CreateCard(card.AccountId, card.CardType))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -87,7 +93,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpDelete("deleteuser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (await _repo.DeleteUser(id)) return Ok();
+            if (await _repo.DeleteUser(id))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -95,7 +104,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpDelete("deleteaccount/{id}")]
         public async Task<IActionResult> DeleteAccount(int id)
         {
-            if (await _repo.DeleteAccount(id)) return Ok();
+            if (await _repo.DeleteAccount(id))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -103,7 +115,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpDelete("deletecard/{id}")]
         public async Task<IActionResult> DeleteCard(int id)
         {
-            if (await _repo.DeleteCard(id)) return Ok();
+            if (await _repo.DeleteCard(id))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -111,7 +126,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("updatecard")]
         public async Task<IActionResult> UpdateCard(CardForDashboardDto card)
         {
-            if (await _repo.UpdateCard(card.Id, card.CardType)) return Ok();
+            if (await _repo.UpdateCard(card.Id, card.CardType))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -131,7 +149,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("updateaccount")]
         public async Task<IActionResult> UpdateAccount(AccountForUpdateDto account)
         {
-            if (await _repo.UpdateAccount(account)) return Ok();
+            if (await _repo.UpdateAccount(account))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
@@ -139,7 +160,10 @@ namespace BankaRenato.WebAPI.Controllers
         [HttpPost("userownsaccount")]
         public async Task<IActionResult> UserOwnsAccount(UserOwnsAccount model)
         {
-            if (await _repo.UserOwnsAccount(model.UserId, model.AccountId)) return Ok();
+            if (await _repo.UserOwnsAccount(model.UserId, model.AccountId))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
         }
