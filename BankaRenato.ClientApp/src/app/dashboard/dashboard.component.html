@@ -1,9 +1,17 @@
-<div *ngIf="user != null" class="profile">
-  <div class = "inf">Username: {{user?.username}}</div>
-  <div class = "inf">Email: {{user?.email}}</div>
-  <div class = "inf">First name: {{user?.firstName}}</div>
-  <div class = "inf">Last name: {{user?.lastName}}</div>
+<div  *ngIf="user != null" class="box">
+    <div class="left">
+        <div class = "inf">Username: {{user?.username}}</div>
+        <div class = "inf">Email: {{user?.email}}</div>
+        <div class = "inf">First name: {{user?.firstName}}</div>
+        <div class = "inf">Last name: {{user?.lastName}}</div>
+      </div>
+      <div class="right">
+          <div class="but" (click)="edit(user.id)">
+              <a>Edit</a>
+            </div>
+        </div>
 </div>
+
 <div>
   <ng-container *ngIf="user?.accounts.length > 0; else elseTemplate">
     <div *ngFor="let account of user.accounts">

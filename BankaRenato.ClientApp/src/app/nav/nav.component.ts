@@ -23,15 +23,13 @@ export class NavComponent implements OnInit {
       this.alertify.success('Logged in successfully');
       this.isAdmin = this.authService.isAdmin();
     }, error => {
-      this.alertify.error('Failed to login');
+      this.alertify.error(error);
     }, () => {
       if(this.isAdmin){
         this.router.navigate(['dashboard-admin']);
       }else{
         this.router.navigate(['dashboard']);
       }
-          
-       
     });
   }
 

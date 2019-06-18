@@ -18,14 +18,13 @@ namespace BankaRenato.WebAPI.Models
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<CardType> CardType { get; set; }
-        public virtual DbSet<PermissionType> PermissionType { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-Q048JSG;Initial Catalog=BankaRenatoDB;Persist Security Info=True;User ID=rembareeg;Password=rembareeG1995");
             }
         }
@@ -75,7 +74,7 @@ namespace BankaRenato.WebAPI.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<PermissionType>(entity =>
+            modelBuilder.Entity<Role>(entity =>
             {
                 entity.Property(e => e.Type)
                     .IsRequired()
@@ -100,13 +99,15 @@ namespace BankaRenato.WebAPI.Models
                     .IsRequired()
                     .HasMaxLength(64);
 
-                entity.Property(e => e.Role)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(40);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Role");
             });
         }
     }

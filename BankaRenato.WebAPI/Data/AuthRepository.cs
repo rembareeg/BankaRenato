@@ -110,5 +110,16 @@ namespace BankaRenato.WebAPI.Data
             return (bool)sqlResponse.Value;
         }
 
+        public async Task<Role> GetUserRole(int id)
+        {
+            SqlParameter sqlUser = new SqlParameter
+            {
+                ParameterName = "@userId",
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                Value = id
+            };
+            return await _context.Role.FromSql("EXECUTE GetUserRole @userId", sqlUser).FirstOrDefaultAsync() as Role;
+        }
     }
 }

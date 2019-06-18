@@ -22,13 +22,11 @@ const routes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [AdminGuard],
         children: [
-          {path: 'edit-user/:id', component: UserEditComponent},
           {path: 'dashboard-admin', component: AdminDashboardComponent},
           {path: 'dashboard/:id', component: DashboardComponent}
-          
-         
         ]
       },
+      {path: 'edit-user/:id', component: UserEditComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'dashboard/edit/:id', component: UserEditComponent},
       {path: 'dashboard/account/:id', component: AccountDetailsComponent}

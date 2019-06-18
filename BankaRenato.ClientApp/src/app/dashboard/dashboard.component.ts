@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
 import { DashboardService } from '../_services/dashboard.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 import { error } from '@angular/compiler/src/util';
 
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   toggleEdit: number = -1;
 
   constructor(private dashboardService: DashboardService, private authService: AuthService, private alertify: AlertifyService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private router: Router) { }
 
   
 
@@ -95,6 +95,8 @@ export class DashboardComponent implements OnInit {
       this.toggleEdit = -1;
     });
   }
-
+  edit(id: number){
+    this.router.navigate([ '/edit-user/', id]);
+  }
 
 }

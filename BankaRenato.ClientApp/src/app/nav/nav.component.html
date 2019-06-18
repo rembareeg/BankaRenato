@@ -3,6 +3,7 @@
   <a *ngIf="isAdmin" [routerLink]="[ '/register' ]"  routerLinkActive="active">Add Client</a>
   <a *ngIf="!loggedIn()" [routerLink]="[ '/register' ]"  routerLinkActive="active">Register</a>
   
+  
   <div class="login-container">
     <div *ngIf="loggedIn()">
     <a class="bt" (click)="logout()">Logout</a> 

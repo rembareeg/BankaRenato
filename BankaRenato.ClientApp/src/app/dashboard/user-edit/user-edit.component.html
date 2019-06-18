@@ -1,4 +1,6 @@
-<form #registerForm="ngForm" (ngSubmit)="change()">
+<ng-container *ngIf="isAdmin; else elseTemplate">
+  
+<form #registerForm="ngForm" (ngSubmit)="updateAdmin()">
     <div class="container">
       <h1>Change user information</h1>
       <hr>
@@ -23,3 +25,23 @@
     </div>
   
 </form>
+</ng-container>
+<ng-template #elseTemplate>
+    <form #registerForm="ngForm" (ngSubmit)="updateUser()">
+        <div class="container">
+          <h1>Change user information</h1>
+          <hr>
+      
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter" name="email" required [(ngModel)]="model.Email">
+      
+          <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Password" name="password" required [(ngModel)]="model.Password">
+      
+          <hr>
+      
+          <button type="submit" class="registerbtn">Change information</button>
+        </div>
+      
+    </form>
+</ng-template>

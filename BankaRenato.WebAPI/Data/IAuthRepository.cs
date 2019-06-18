@@ -13,6 +13,7 @@ namespace BankaRenato.WebAPI.Data
         Task<User> Login(string username, string password);
         Task<bool> UserExists(string username);
         Task<bool> EmailExists(string email);
+        Task<Role> GetUserRole(int id);
 
     }
 }

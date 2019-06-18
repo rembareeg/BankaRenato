@@ -11,16 +11,15 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (error instanceof HttpErrorResponse) {
                 // Unauthorized 401
                 if (error.status === 401){
-                    return throwError(error.statusText);
+                    return throwError(error.error);
                 }
                 // Internal error 500
                 const applicationError = error.headers.get('Application-Error');
                 if (applicationError) {
-                    console.error(applicationError);
                     return throwError(applicationError);
                 }
                 // Bad request 400
-                const serverError = error.error.errors;
+                const serverError = error.error;
                 let modelStateErrors = '';
                 if (serverError && typeof serverError === 'object') {
                     for (const key in serverError) {

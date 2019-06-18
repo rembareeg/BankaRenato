@@ -1,7 +1,7 @@
 ﻿CREATE FUNCTION [dbo].[HashPassword]
 (
-	@password NVARCHAR(50) NOT NULL,
-	@salt UNIQUEIDENTIFIER NOT NULL
+	@password NVARCHAR(50),
+	@salt UNIQUEIDENTIFIER
 )
 RETURNS BINARY(64) 
 AS

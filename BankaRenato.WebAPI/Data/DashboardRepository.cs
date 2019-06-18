@@ -151,7 +151,7 @@ namespace BankaRenato.WebAPI.Data
         /// <returns></returns>
         public async Task<IEnumerable<User>> GetUsersByRole(string role)
         {
-            return await _context.User.Where(users => users.Role == role).ToListAsync();
+            return await _context.User.Where(users => users.Role.Type == role).ToListAsync();/**/
         }
         /// <summary>
         /// Delets user by id

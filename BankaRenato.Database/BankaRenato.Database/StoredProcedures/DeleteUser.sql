@@ -12,7 +12,7 @@ BEGIN
 				INNER JOIN dbo.[Card] C ON C.AccountId= A.Id
 					WHERE U.Id = @userId
 		DELETE A FROM dbo.[User] U 
-			INNER JOIN dbo.[Account] A ON A.UserId = U.ID
+			INNER JOIN dbo.[Account] A ON A.UserId = U.Id
 					WHERE U.Id = @userId
 		
 		DELETE dbo.[User] WHERE Id = @userId

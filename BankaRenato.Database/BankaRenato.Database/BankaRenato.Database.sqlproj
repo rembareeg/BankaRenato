@@ -84,6 +84,7 @@
     <Build Include="StoredProcedures\SetupDatabase.sql" />
     <Build Include="Functions\HashPassword.sql" />
     <Build Include="Tables\Role.sql" />
+    <Build Include="StoredProcedures\GetUserRole.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BankaRenato.Database.publish.xml" />

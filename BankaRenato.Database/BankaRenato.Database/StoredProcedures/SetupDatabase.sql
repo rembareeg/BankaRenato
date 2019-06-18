@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[SetupDatabase]
 AS
 
-	INSERT INTO [Role] (Id, Type) VALUES (1, 'Admin')
-	INSERT INTO [Role] (Id, Type) VALUES (2, 'Client')
+	INSERT INTO [Role] (Type) VALUES ('Admin')
+	INSERT INTO [Role] (Type) VALUES ('Client')
 	
 	DECLARE @salt UNIQUEIDENTIFIER=NEWID()
 	

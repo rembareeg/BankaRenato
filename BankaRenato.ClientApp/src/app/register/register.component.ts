@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.authService.register(this.model).subscribe(next => {
       this.alertify.success('registration successfull');
-      this.router.navigate(['dashboard-admin']);
+      this.router.navigate(['home']);
     }, error => {
       this.alertify.error(error);
     })
