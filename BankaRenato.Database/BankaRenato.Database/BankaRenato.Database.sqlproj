@@ -67,14 +67,13 @@
     <Build Include="StoredProcedures\RegisterUser.sql" />
     <Build Include="StoredProcedures\UserExists.sql" />
     <Build Include="StoredProcedures\UserLogin.sql" />
-    <Build Include="Tables\PermissionType.sql" />
     <Build Include="Tables\Account.sql" />
     <Build Include="Tables\Card.sql" />
     <Build Include="Tables\CardType.sql" />
     <Build Include="StoredProcedures\OpenAccount.sql" />
     <Build Include="StoredProcedures\GetUserAccounts.sql" />
     <Build Include="StoredProcedures\GetAccountCards.sql" />
-    <Build Include="StoredProcedures\CreateCard_1.sql" />
+    <Build Include="StoredProcedures\CreateCard.sql" />
     <Build Include="StoredProcedures\DeleteUser.sql" />
     <Build Include="StoredProcedures\DeleteAccount.sql" />
     <Build Include="StoredProcedures\DeleteCard.sql" />
@@ -84,6 +83,7 @@
     <Build Include="StoredProcedures\UserOwnsAccount.sql" />
     <Build Include="StoredProcedures\SetupDatabase.sql" />
     <Build Include="Functions\HashPassword.sql" />
+    <Build Include="Tables\Role.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BankaRenato.Database.publish.xml" />

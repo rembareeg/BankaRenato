@@ -9,7 +9,7 @@
     LastName NVARCHAR(40) NOT NULL,
     [RoleId] INT NOT NULL, 
     CONSTRAINT [PK_User_UserID] PRIMARY KEY CLUSTERED (Id ASC), 
-  
+	CONSTRAINT [FK_User_Role] FOREIGN KEY ([RoleId]) REFERENCES [Role]([Id])
 	
 
 )

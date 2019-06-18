@@ -3,7 +3,7 @@
 	@accountId INT,
 	@response BIT OUT
 AS
-	IF EXISTS (SELECT * FROM [Account] WHERE id = @accountId AND UserId = @userId)
+	IF EXISTS (SELECT * FROM [Account] WHERE Id = @accountId AND UserId = @userId)
 BEGIN
 	SET @response = 1
 END
