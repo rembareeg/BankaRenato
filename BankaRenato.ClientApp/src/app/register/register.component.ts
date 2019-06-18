@@ -14,6 +14,10 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
+    if(this.authService.loggedIn() && !this.authService.isAdmin)
+    {
+      this.router.navigate(['home']);
+    }
   }
 
   register() {

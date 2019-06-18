@@ -1,5 +1,4 @@
-﻿-- Description:	<procetude to open card for account>
-CREATE PROCEDURE [dbo].[CreateCard] 
+﻿CREATE PROCEDURE [dbo].[CreateCard]
 	@accountId INT,
 	@cardId INT,
 	@response BIT OUTPUT
@@ -8,7 +7,7 @@ BEGIN
     SET NOCOUNT ON
 
     BEGIN TRY
-		INSERT INTO dbo.[Card] (AccountId, CardType) VALUES(@accountId, @cardId, 0)
+		INSERT INTO dbo.[Card] (AccountId, CardType) VALUES(@accountId, @cardId)
 		SET @response = 1
 
     END TRY

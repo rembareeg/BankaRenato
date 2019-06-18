@@ -30,6 +30,7 @@ const routes: Routes = [
         ]
       },
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'dashboard/edit/:id', component: UserEditComponent},
       {path: 'dashboard/account/:id', component: AccountDetailsComponent}
     ]
   },  

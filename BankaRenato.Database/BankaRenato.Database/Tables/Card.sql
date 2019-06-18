@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Card]
 (
-	[Id] INT IDENTITY(0,1) NOT NULL PRIMARY KEY, 
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
     [AccountId] INT NOT NULL, 
     [CardType] INT NOT NULL, 
     CONSTRAINT [FK_Card_To_Account] FOREIGN KEY ([AccountId]) REFERENCES [Account]([Id]),

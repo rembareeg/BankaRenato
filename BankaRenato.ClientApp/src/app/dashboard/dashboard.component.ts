@@ -95,6 +95,6 @@ export class DashboardComponent implements OnInit {
       this.toggleEdit = -1;
     });
   }
-  
+
 
 }
