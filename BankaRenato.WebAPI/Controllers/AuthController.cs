@@ -42,7 +42,10 @@ namespace BankaRenato.WebAPI.Controllers
             }
 
             //Registrate user
-            if (await _repo.Register(userForRegistration)) return Ok();
+            if (await _repo.Register(userForRegistration))
+            {
+                return Ok();
+            }
 
             return Unauthorized();
 

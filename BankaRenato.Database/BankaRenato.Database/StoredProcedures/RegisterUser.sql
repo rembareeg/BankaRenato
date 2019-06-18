@@ -14,7 +14,7 @@ BEGIN
     BEGIN TRY
 
         INSERT INTO dbo.[User] (Username, Password, Salt, FirstName, LastName, Email, Role)
-        VALUES(@username, HASHBYTES('SHA2_512', @password + CAST(@salt AS NVARCHAR(36))), @salt, @firstName, @lastName, @email, 'Client')
+        VALUES(@username, dbo.HashPassword(@password, @salt), @salt, @firstName, @lastName, @email, 'Client')
 
        SET @response = 1
 
