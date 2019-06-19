@@ -25,18 +25,18 @@ export class UserEditComponent implements OnInit {
     {
       if(this.route.snapshot.params['id'] == this.authService.decodedToken.nameid)
       {
-        this.loadUserById();
+        this.loadUserAsUser();
       }else{
         this.alertify.error("Permission denied!");
         this.router.navigate(['dashboard']);
       }
     }else{
-      this.loadUserById();
+      this.loadUserAsAdmin();
     }
     
   }
 
-  loadUserById(){
+  loadUserAsAdmin(){
     this.dashboardService.getUserById(this.route.snapshot.params['id']).subscribe((user: User) => {
       this.model.id = user.id;
       this.model.Email = user.email;
@@ -48,9 +48,18 @@ export class UserEditComponent implements OnInit {
       this.alertify.error(error);
     });
   }
+  loadUserAsUser(){
+    this.dashboardService.getUserById(this.route.snapshot.params['id']).subscribe((user: User) => {
+      this.model.id = user.id;
+      this.model.Email = user.email;
+      this.model.Password = '';
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
 
   updateAdmin(){
-    this.dashboardService.updateUser(this.model).subscribe((user: User) => {
+    this.dashboardService.updateUserAsAdmin(this.model).subscribe((user: User) => {
       this.model.id = user.id;
       this.model.Email = user.email;
       this.model.Username = user.username;
@@ -63,12 +72,9 @@ export class UserEditComponent implements OnInit {
     });
   }
   updateUser(){
-    this.dashboardService.updateUser(this.model).subscribe((user: User) => {
+    this.dashboardService.updateUserAsUser(this.model).subscribe((user: User) => {
       this.model.id = user.id;
       this.model.Email = user.email;
-      this.model.Username = user.username;
-      this.model.FirstName = user.firstName;
-      this.model.LastName = user.lastName;
       this.model.Password = '';
       this.alertify.success("Successfully changed data");
     }, error => {

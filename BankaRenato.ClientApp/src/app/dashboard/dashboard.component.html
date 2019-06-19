@@ -1,11 +1,10 @@
 <div  *ngIf="user != null" class="box">
     <div class="left">
-        <div class = "inf">Username: {{user?.username}}</div>
         <div class = "inf">Email: {{user?.email}}</div>
         <div class = "inf">First name: {{user?.firstName}}</div>
         <div class = "inf">Last name: {{user?.lastName}}</div>
       </div>
-      <div class="right">
+      <div *ngIf="!isAdmin" class="right">
           <div class="but" (click)="edit(user.id)">
               <a>Edit</a>
             </div>
@@ -26,14 +25,14 @@
           <div class="but" [routerLink]="[ '/dashboard/account/', account.id ]">
             <a>Details</a>
           </div>
-          <div *ngIf="isAdmin" >
+          <ng-template [ngIf]="isAdmin">
             <div class="but" (click)="editAccount(account.id, account.name, account.balance)">
               <a>Edit</a>
             </div>
             <div class="but" (click)="deleteAccount(account.id)">
               <a>Delete</a>
             </div>
-          </div>
+          </ng-template>
           
         </div>
       </ng-container>

@@ -1,10 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[UpdateUser]
+﻿CREATE PROCEDURE [dbo].[UpdateUserAsUser]
 	@userId INT,
-	@username NVARCHAR(50), 
     @password NVARCHAR(50),
 	@email NVARCHAR(40),
-    @firstName NVARCHAR(40), 
-    @lastName NVARCHAR(40),
     @response BIT OUTPUT
 AS
 BEGIN
@@ -15,11 +12,8 @@ BEGIN
 			DECLARE @salt UNIQUEIDENTIFIER=NEWID()
 			
 			UPDATE dbo.[User] SET 
-				Username = @username,
-				Password =  HASHBYTES('SHA2_512', @password + CAST(@salt AS NVARCHAR(36))),
+				Password =  dbo.HashPassword(@password, @salt),
 				Salt = @salt,				
-				FirstName = @firstName,
-				LastName = @lastName,
 				Email = @email
 			WHERE Id = @userId
 
@@ -27,9 +21,6 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE dbo.[User] SET 
-				Username = @username,	
-				FirstName = @firstName,
-				LastName = @lastName,
 				Email = @email
 			WHERE Id = @userId
 		END

@@ -18,11 +18,13 @@ namespace BankaRenato.WebAPI.Controllers
     {
         private readonly IDashboardRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IAuthRepository _auth;
 
-        public DashboardController(IDashboardRepository repo, IMapper mapper)
+        public DashboardController(IDashboardRepository repo, IMapper mapper, IAuthRepository auth)
         {
             _repo = repo;
             _mapper = mapper;
+            _auth = auth;
         }
 
         [Authorize(Roles = "Client, Admin")]
@@ -134,16 +136,73 @@ namespace BankaRenato.WebAPI.Controllers
             return Unauthorized();
         }
         [Authorize(Roles = "Admin")]
-        [HttpPut("updateuser")]
-        public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
+        [HttpPut("updateuserasadmin")]
+        public async Task<IActionResult> UpdateUserAsAdmin(UserForUpdateAsAdminDto userForUpdate)
         {
-            if (await _repo.UpdateUser(userForUpdate))
+
+            User user = await _repo.GetUser(userForUpdate.Id);
+            //check if password is not null and between <5, 15>
+            if (!String.IsNullOrEmpty(userForUpdate.Password) && (userForUpdate.Password.Length < 5 || userForUpdate.Password.Length > 15))
+            {
+                return BadRequest("Password needs to be between 5 and 15 characters");
+            }
+            //if email is not same check if newe mail already exists
+            if (user.Email != userForUpdate.Email.ToLower())
+            {
+                if (await _auth.EmailExists(userForUpdate.Email.ToLower()))
+                {
+                    return BadRequest("Email already in use");
+                }
+
+            }
+            //if username is not same check if new username already exists
+            if (user.Username != userForUpdate.Username.ToLower())
+            {
+                if (await _auth.UserExists(userForUpdate.Username.ToLower()))
+                {
+                    return BadRequest("Username already in use");
+                }
+
+            }
+
+            if (await _repo.UpdateUserAsAdmin(userForUpdate))
             {
                 userForUpdate.Password = "";
                 return Ok(userForUpdate);
-            }                
+            }
 
             return Unauthorized();
+        
+        }
+        [Authorize(Roles = "Client")]
+        [HttpPut("updateuserasuser")]
+        public async Task<IActionResult> UpdateUserAsUser(UserForUpdateAsUserDto userForUpdate)
+        {
+            User user = await _repo.GetUser(userForUpdate.Id);
+            //check if password is not null and between <5, 15>
+            if (!String.IsNullOrEmpty(userForUpdate.Password) && (userForUpdate.Password.Length < 5 || userForUpdate.Password.Length > 15))
+            {
+                return BadRequest("Password needs to be between 5 and 15 characters");
+            }
+            //if email is not same check if new email already exists
+            if (user.Email != userForUpdate.Email.ToLower())
+            {
+                if (await _auth.EmailExists(userForUpdate.Email.ToLower()))
+                {
+                    return BadRequest("Email already in use");
+                }
+
+            }
+
+            if (await _repo.UpdateUserAsUser(userForUpdate))
+            {
+                userForUpdate.Password = "";
+                return Ok(userForUpdate);
+            }
+
+            return Unauthorized();
+            
+            
         }
         [Authorize(Roles = "Admin")]
         [HttpPost("updateaccount")]

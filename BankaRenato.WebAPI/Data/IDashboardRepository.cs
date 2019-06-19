@@ -21,7 +21,8 @@ namespace BankaRenato.WebAPI.Data
         Task<bool> DeleteAccount(int id);
         Task<bool> DeleteCard(int id);
         Task<bool> UpdateCard(int id, int cardType);
-        Task<bool> UpdateUser(UserForUpdateDto user);
+        Task<bool> UpdateUserAsAdmin(UserForUpdateAsAdminDto user);
+        Task<bool> UpdateUserAsUser(UserForUpdateAsUserDto user);
         Task<bool> UpdateAccount(AccountForUpdateDto account);
         Task<bool> UserOwnsAccount(int userId, int accountId);
 

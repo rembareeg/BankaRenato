@@ -58,8 +58,11 @@ export class DashboardService {
   updateCard(card: Card){
     return this.http.post(environment.baseUrl + 'dashboard/updatecard', card);
   }
-  updateUser(model: any){
-    return this.http.put(environment.baseUrl + 'dashboard/updateuser', model);
+  updateUserAsAdmin(model: any){
+    return this.http.put(environment.baseUrl + 'dashboard/updateuserasadmin', model);
+  }
+  updateUserAsUser(model: any){
+    return this.http.put(environment.baseUrl + 'dashboard/updateuserasuser', model);
   }
   updateAccount(model: any){
     return this.http.post(environment.baseUrl + 'dashboard/updateaccount', model);

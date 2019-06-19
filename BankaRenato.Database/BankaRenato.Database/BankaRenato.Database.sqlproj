@@ -78,13 +78,14 @@
     <Build Include="StoredProcedures\DeleteAccount.sql" />
     <Build Include="StoredProcedures\DeleteCard.sql" />
     <Build Include="StoredProcedures\UpdateCard.sql" />
-    <Build Include="StoredProcedures\UpdateUser.sql" />
+    <Build Include="StoredProcedures\UpdateUserAsAdmin.sql" />
     <Build Include="StoredProcedures\UpdateAccount.sql" />
     <Build Include="StoredProcedures\UserOwnsAccount.sql" />
     <Build Include="StoredProcedures\SetupDatabase.sql" />
     <Build Include="Functions\HashPassword.sql" />
     <Build Include="Tables\Role.sql" />
     <Build Include="StoredProcedures\GetUserRole.sql" />
+    <Build Include="StoredProcedures\UpdateUserAsUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BankaRenato.Database.publish.xml" />

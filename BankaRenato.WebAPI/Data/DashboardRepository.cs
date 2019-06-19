@@ -262,28 +262,6 @@ namespace BankaRenato.WebAPI.Data
             return (bool)sqlResponse.Value;
         }
         /// <summary>
-        /// Updates user
-        /// </summary>
-        /// <param name="user"> User for update</param>
-        /// <returns></returns>
-        public async Task<bool> UpdateUser(UserForUpdateDto user)
-        {
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter{ParameterName = "@userId", DbType = DbType.Int32, Direction = ParameterDirection.Input, Value = user.Id},
-                new SqlParameter{ParameterName = "@username", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Username.ToLower()},
-                new SqlParameter{ParameterName = "@password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
-                new SqlParameter{ParameterName = "@email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
-                new SqlParameter{ParameterName = "@firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
-                new SqlParameter{ParameterName = "@lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
-                new SqlParameter{ParameterName = "@response", DbType = DbType.Boolean,Direction = ParameterDirection.Output}
-            };
-
-            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateUser @userId, @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
-
-            return (bool)parameters[parameters.Length - 1].Value;
-        }
-        /// <summary>
         /// Updates account
         /// </summary>
         /// <param name="account">Account for update</param>
@@ -334,6 +312,47 @@ namespace BankaRenato.WebAPI.Data
             await _context.Database.ExecuteSqlCommandAsync("EXECUTE UserOwnsAccount @cardId, @cardType, @response OUT", sqlUserId, sqlAccountId, sqlResponse);
 
             return (bool)sqlResponse.Value;
+        }
+        /// <summary>
+        /// Updates more info for user
+        /// </summary>
+        /// <param name="user"> User for update</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateUserAsAdmin(UserForUpdateAsAdminDto user)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter{ParameterName = "@userId", DbType = DbType.Int32, Direction = ParameterDirection.Input, Value = user.Id},
+                new SqlParameter{ParameterName = "@username", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Username.ToLower()},
+                new SqlParameter{ParameterName = "@password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
+                new SqlParameter{ParameterName = "@email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
+                new SqlParameter{ParameterName = "@firstName", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.FirstName},
+                new SqlParameter{ParameterName = "@lastName ", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.LastName},
+                new SqlParameter{ParameterName = "@response", DbType = DbType.Boolean,Direction = ParameterDirection.Output}
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateUserAsAdmin @userId, @username, @password, @email, @firstName, @lastName, @response OUT", parameters);
+
+            return (bool)parameters[parameters.Length - 1].Value;
+        }
+        /// <summary>
+        /// Updates less info for user
+        /// </summary>
+        /// <param name="user"> User for update</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateUserAsUser(UserForUpdateAsUserDto user)
+        {
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter{ParameterName = "@userId", DbType = DbType.Int32, Direction = ParameterDirection.Input, Value = user.Id},
+                new SqlParameter{ParameterName = "@password", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Password},
+                new SqlParameter{ParameterName = "@email", DbType = DbType.String, Direction = ParameterDirection.Input, Value = user.Email.ToLower()},
+                new SqlParameter{ParameterName = "@response", DbType = DbType.Boolean,Direction = ParameterDirection.Output}
+            };
+
+            await _context.Database.ExecuteSqlCommandAsync("EXECUTE UpdateUserAsUser @userId, @password, @email, @response OUT", parameters);
+
+            return (bool)parameters[parameters.Length - 1].Value;
         }
     }
 }
