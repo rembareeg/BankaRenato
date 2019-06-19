@@ -1,22 +1,22 @@
 <div *ngFor="let user of users">
   <div>
     <div class="box">
-      <div class="left pad">
+      <div class="f-left">
         <p>Account id: {{user.id}}</p>
         <p>Name: {{user.firstName}} {{user.lastName}}</p>
         </div>
-        <div class="left pad">
+        <div class="f-left">
           <p>Username: {{user.username}}</p>
           <p>Email : {{user.email}}</p>
-          </div>
-      <div class="right">
-        <div class="but" [routerLink]="[ '/dashboard/', user.id ]">
+        </div>
+      <div class="f-right">
+        <div class="btn" [routerLink]="[ '/dashboard/', user.id ]">
           <a>Details</a>
         </div>
-        <div class="but" [routerLink]="[ '/edit-user/', user.id]">
+        <div class="btn" [routerLink]="[ '/edit-user/', user.id]">
           <a>Edit</a>
         </div>
-        <div class="but" (click)="deleteUser(user.id)">
+        <div class="btn" (click)="deleteUser(user.id)">
           <a>Delete</a>
         </div>
     </div>

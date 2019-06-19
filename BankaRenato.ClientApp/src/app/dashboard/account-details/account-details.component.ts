@@ -26,7 +26,6 @@ export class AccountDetailsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.model.CardType = 0;
     this.isAdmin = this.authService.isAdmin();
     this.owner.UserId =  this.authService.decodedToken.nameid;
     this.owner.AccountId = this.route.snapshot.params['id'];
@@ -45,7 +44,7 @@ export class AccountDetailsComponent implements OnInit {
       this.displayAccount();
       this.getCardTypes();
     }
-    
+    this.model.CardType = 1;
   }
     
   

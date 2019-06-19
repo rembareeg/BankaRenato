@@ -1,14 +1,16 @@
-<div  *ngIf="user != null" class="box">
-    <div class="left">
-        <div class = "inf">Email: {{user?.email}}</div>
-        <div class = "inf">First name: {{user?.firstName}}</div>
-        <div class = "inf">Last name: {{user?.lastName}}</div>
-      </div>
-      <div *ngIf="!isAdmin" class="right">
-          <div class="but" (click)="edit(user.id)">
-              <a>Edit</a>
-            </div>
-        </div>
+<div  *ngIf="user != null" class="info">
+
+
+    <p class = "inf">Email: {{user?.email}}</p>
+    <p class = "inf">First name: {{user?.firstName}}</p>
+    <p class = "inf">Last name: {{user?.lastName}}</p>
+
+
+    <div class="btn" *ngIf="!isAdmin" (click)="edit(user.id)">
+        <a>Edit</a>
+    </div>
+
+
 </div>
 
 <div>
@@ -16,20 +18,20 @@
     <div *ngFor="let account of user.accounts">
       <div class="box">
           <ng-container *ngIf="toggleEdit != account.id; else elseTemplate">
-        <div class="left">
+        <div class="f-left">
           <p>Account number: {{account?.id}}</p>
           <p>Account name: {{account?.name}}</p>
           <p>Account balance: {{account?.balance}} {{account.currency}}</p>
           </div>
-        <div class="right">
-          <div class="but" [routerLink]="[ '/dashboard/account/', account.id ]">
+        <div class="f-right">
+          <div class="btn" [routerLink]="[ '/dashboard/account/', account.id ]">
             <a>Details</a>
           </div>
           <ng-template [ngIf]="isAdmin">
-            <div class="but" (click)="editAccount(account.id, account.name, account.balance)">
+            <div class="btn" (click)="editAccount(account.id, account.name, account.balance)">
               <a>Edit</a>
             </div>
-            <div class="but" (click)="deleteAccount(account.id)">
+            <div class="btn" (click)="deleteAccount(account.id)">
               <a>Delete</a>
             </div>
           </ng-template>
@@ -38,15 +40,15 @@
       </ng-container>
       <ng-template #elseTemplate>
         <form #registerForm="ngForm" (ngSubmit)="updateAccount()">
-            <div class="left">
+            <div class="f-left">
                 <p>Account number: {{account.id}}</p>
                 <p>Account name: <input type="text" name="Name" required [(ngModel)]="updateModel.Name"></p>
                 <p>Account balance: <input type="number"  name="Balance" required [(ngModel)]="updateModel.Balance"> {{account.currency}}</p>
             </div>
-            <div class="right">
+            <div class="f-right">
               <div *ngIf="this.isAdmin" >
                 <button type="submit" class="registerbtn">Save</button>
-                <div class="but" (click)="editAccount(-1, '', 0)">
+                <div class="btn" (click)="editAccount(-1, '', 0)">
                   <a>Cancle</a>
                 </div>
               </div>
@@ -70,6 +72,5 @@
 
 </form>
 
-  <!--<a class="bb"(click)="openAccount()">Open new account</a>-->
 
 
