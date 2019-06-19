@@ -15,19 +15,23 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 // Internal error 500
                 const applicationError = error.headers.get('Application-Error');
+                
                 if (applicationError) {
                     return throwError(applicationError);
                 }
                 // Bad request 400
-                const serverError = error.error;
-                let modelStateErrors = '';
-                if (serverError && typeof serverError === 'object') {
-                    for (const key in serverError) {
-                        modelStateErrors += serverError[key] + '\n';
+                if(error.status === 400){
+                    const serverError = error.error;
+                    let modelStateErrors = '';
+                    if (serverError && typeof serverError === 'object') {
+                        for (const key in serverError) {
+                            modelStateErrors += serverError[key] + '\n';
+                        }
                     }
+                    return throwError(modelStateErrors || serverError || 'Server error');
                 }
-                return throwError(modelStateErrors || serverError || 'Server error');
                 
+                return throwError('Server Error');
             }
         }));
     }
